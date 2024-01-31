@@ -20,4 +20,3 @@ global using SunamoThisApp;
 global using SunamoTypeOfMessage;
 global using SunamoValues.Values;
 global using SunamoValues;
-global using SunamoI18N.Values;

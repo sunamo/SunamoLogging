@@ -42,6 +42,8 @@ public abstract partial class TemplateLoggerBase
         _writeLineDelegate(error, v, EmptyArrays.Strings);
     }
 
+
+
     /// <summary>
     /// Return true if any will be null
     /// </summary>
@@ -51,7 +53,7 @@ public abstract partial class TemplateLoggerBase
     /// <param name="args"></param>
     public bool AnyElementIsNull(Type type, string methodName, string nameOfCollection, string[] args)
     {
-        List<int> nulled = CA.IndexesWithNull(args);
+        List<int> nulled = CAIndexesWithNull.IndexesWithNull(args);
         if (nulled.Count > 0)
         {
             WriteLine(TypeOfMessage.Information, Exceptions.AnyElementIsNullOrEmpty(FullNameOfExecutedCode(t.Item1, t.Item2), nameOfCollection, nulled));

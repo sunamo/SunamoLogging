@@ -85,7 +85,7 @@ public abstract partial class LoggerBase : ILoggerBase
 
     public void WriteArgs(params string[] args)
     {
-        _writeLineDelegate.Invoke(SHJoin.JoinPairs(args), EmptyArrays.Strings);
+        _writeLineDelegate.Invoke(SHJoinPairs.JoinPairs(args), EmptyArrays.Strings);
     }
 
     public bool IsInRightFormat(string text, params string[] args)
@@ -129,7 +129,7 @@ public abstract partial class LoggerBase : ILoggerBase
     {
         if (what != null)
         {
-            WriteLine(SH.ListToString(what, null));
+            WriteLine(SHGetString.ListToString(what, null));
         }
     }
 

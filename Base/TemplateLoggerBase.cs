@@ -92,7 +92,7 @@ public abstract partial class TemplateLoggerBase
     /// <param name="args"></param>
     public bool AnyElementIsNullOrEmpty(Type type, string methodName, string nameOfCollection, IList args)
     {
-        List<int> nulled = CA.IndexesWithNullOrEmpty(args);
+        List<int> nulled = CAIndexesWithNull.IndexesWithNullOrEmpty(args);
         if (nulled.Count > 0)
         {
             WriteLine(TypeOfMessage.Information, Exceptions.AnyElementIsNullOrEmpty(FullNameOfExecutedCode(t.Item1, t.Item2), nameOfCollection, nulled));
