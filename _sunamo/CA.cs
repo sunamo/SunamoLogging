@@ -1,7 +1,9 @@
+namespace SunamoLogger._sunamo;
+
 //namespace SunamoLogger._sunamo;
 
-//public class CA
+//internal class CA
 //{
-//    public static Func<IList, List<int>> IndexesWithNull;
-//    public static Func<IList, List<int>> IndexesWithNullOrEmpty;
+//    internal static Func<IList, List<int>> IndexesWithNull;
+//    internal static Func<IList, List<int>> IndexesWithNullOrEmpty;
 //}

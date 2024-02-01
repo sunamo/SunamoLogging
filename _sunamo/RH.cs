@@ -1,6 +1,8 @@
+namespace SunamoLogger._sunamo;
+
 //namespace SunamoLogger._sunamo;
 
-//public class RH
+//internal class RH
 //{
-//    public static Func<DumpAsStringArgs, string> DumpAsString;
+//    internal static Func<DumpAsStringArgs, string> DumpAsString;
 //}

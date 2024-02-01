@@ -21,7 +21,7 @@ public class DebugLogger : LoggerBase
         {
             if (instance == null)
             {
-                ThrowEx.Custom("Dont use DebugLogger without #if DEBUG!!", false);
+                throw new Exception("Dont use DebugLogger without #if DEBUG!!");
                 return DummyLogger.Instance;
             }
             return instance;
@@ -56,12 +56,12 @@ public class DebugLogger : LoggerBase
 #if DEBUG //2
     public static void DebugWriteLine(TypeOfMessage tz, string text, params Object[] args)
     {
-        //DebugLogger.DebugWriteLine(tz.ToString() + AllStrings.cs2 + SHFormat.Format2(text, args));
+        //DebugLogger.DebugWriteLine(tz.ToString() + AllStrings.cs2 + string.Format(text, args));
     }
 
     public static void DebugWriteLine(string text, params string[] args)
     {
-        Debug.WriteLine(SHFormat.Format2(text, args));
+        Debug.WriteLine(string.Format(text, args));
     }
 #endif
 

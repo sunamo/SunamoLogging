@@ -85,7 +85,7 @@ public abstract partial class LoggerBase : ILoggerBase
 
     public void WriteArgs(params string[] args)
     {
-        _writeLineDelegate.Invoke(SHJoinPairs.JoinPairs(args), EmptyArrays.Strings);
+        _writeLineDelegate.Invoke(/*SHJoinPairs.JoinPairs(args)*/ string.Join(";", args), EmptyArrays.Strings);
     }
 
     public bool IsInRightFormat(string text, params string[] args)
@@ -125,11 +125,11 @@ public abstract partial class LoggerBase : ILoggerBase
     /// for compatibility with CL.WriteLine
     /// </summary>
     /// <param name = "what"></param>
-    public void WriteLine(object what)
+    public void WriteLine(string what)
     {
         if (what != null)
         {
-            WriteLine(SHGetString.ListToString(what, null));
+            WriteLine(what);
         }
     }
 

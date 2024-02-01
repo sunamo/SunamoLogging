@@ -21,7 +21,7 @@ public class DebugTemplateLogger : TemplateLoggerBase
         {
             if (instance == null)
             {
-                ThrowEx.Custom("Dont use DebugLogger without #if DEBUG!!", false);
+                throw new Exception("Dont use DebugLogger without #if DEBUG!!");
                 return DummyTemplateLogger.Instance;
             }
             return instance;

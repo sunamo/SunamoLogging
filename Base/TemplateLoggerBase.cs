@@ -90,7 +90,7 @@ public abstract partial class TemplateLoggerBase
     /// <param name="methodName"></param>
     /// <param name="nameOfCollection"></param>
     /// <param name="args"></param>
-    public bool AnyElementIsNullOrEmpty(Type type, string methodName, string nameOfCollection, IList args)
+    public bool AnyElementIsNullOrEmpty(Type type, string methodName, string nameOfCollection, List<string> args)
     {
         List<int> nulled = CAIndexesWithNull.IndexesWithNullOrEmpty(args);
         if (nulled.Count > 0)
