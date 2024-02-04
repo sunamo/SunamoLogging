@@ -5,43 +5,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace SunamoLogger._sunamo
+namespace SunamoLogger._sunamo;
+
+internal class CAIndexesWithNull
 {
-    internal class CAIndexesWithNull
+    internal static List<int> IndexesWithNull(IList times)
     {
-        internal static List<int> IndexesWithNull(IList times)
+        List<int> nulled = new List<int>();
+        int i = 0;
+        foreach (var item in times)
         {
-            List<int> nulled = new List<int>();
-            int i = 0;
-            foreach (var item in times)
+            if (item == null)
             {
-                if (item == null)
-                {
-                    nulled.Add(i);
-                }
-                i++;
+                nulled.Add(i);
             }
-
-            return nulled;
+            i++;
         }
-        internal static List<int> IndexesWithNullOrEmpty(IList times)
+
+        return nulled;
+    }
+    internal static List<int> IndexesWithNullOrEmpty(IList times)
+    {
+        List<int> nulled = new List<int>();
+        int i = 0;
+        foreach (var item in times)
         {
-            List<int> nulled = new List<int>();
-            int i = 0;
-            foreach (var item in times)
+            if (item == null)
             {
-                if (item == null)
-                {
-                    nulled.Add(i);
-                }
-                else if (item.ToString() == string.Empty)
-                {
-                    nulled.Add(i);
-                }
-                i++;
+                nulled.Add(i);
             }
-
-            return nulled;
+            else if (item.ToString() == string.Empty)
+            {
+                nulled.Add(i);
+            }
+            i++;
         }
+
+        return nulled;
     }
 }
