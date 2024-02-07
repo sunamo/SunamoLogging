@@ -1,3 +1,5 @@
+using SunamoXlfKeys;
+
 namespace SunamoLogger.Base;
 
 public abstract partial class TemplateLoggerBase

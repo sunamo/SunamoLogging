@@ -17,22 +17,22 @@ public abstract partial class LoggerBase : ILoggerBase
 
     }
 
-    public void DumpObject(string name, object o, DumpProvider d, params string[] onlyNames)
-    {
-        var dump = RH.DumpAsString(new DumpAsStringArgs { name = name, o = o, d = d, onlyNames = onlyNames.ToList() });//  , o, d, onlyNames);
-        WriteLine(dump);
-        WriteLine(AllStringsSE.space);
-    }
+    //public void DumpObject(string name, object o, DumpProvider d, params string[] onlyNames)
+    //{
+    //    var dump = RH.DumpAsString(new DumpAsStringArgs { name = name, o = o, d = d, onlyNames = onlyNames.ToList() });//  , o, d, onlyNames);
+    //    WriteLine(dump);
+    //    WriteLine(AllStringsSE.space);
+    //}
 
-    public void DumpObjects(string name, IList o, DumpProvider d, params string[] onlyNames)
-    {
-        int i = 0;
-        foreach (var item in o)
-        {
-            DumpObject(name + " #" + i, item, d, onlyNames);
-            i++;
-        }
-    }
+    //public void DumpObjects(string name, IList o, DumpProvider d, params string[] onlyNames)
+    //{
+    //    int i = 0;
+    //    foreach (var item in o)
+    //    {
+    //        DumpObject(name + " #" + i, item, d, onlyNames);
+    //        i++;
+    //    }
+    //}
 
     /// <summary>
     /// Only for debug purposes
