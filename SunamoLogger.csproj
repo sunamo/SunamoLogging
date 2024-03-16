@@ -7,8 +7,6 @@
     <Description>Support for several logging system based on their output</Description>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="SunamoExtensions" Version="24.2.6.2" />
-    <PackageReference Include="SunamoInterfaces" Version="24.2.6.3" />
     <PackageReference Include="SunamoTypeOfMessage" Version="24.2.6.2" />
     <PackageReference Include="SunamoXlfKeys" Version="24.2.6.2" />
   </ItemGroup>
