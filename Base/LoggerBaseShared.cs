@@ -4,6 +4,6 @@ public abstract partial class LoggerBase
 {
     public void TwoState(bool ret, params string[] toAppend)
     {
-        WriteLine(ret.ToString() + AllStringsSE.comma + string.Join(AllCharsSE.comma, toAppend));
+        WriteLine(ret.ToString() + AllStrings.comma + string.Join(AllCharsSE.comma, toAppend));
     }
 }

@@ -21,7 +21,7 @@ public abstract partial class LoggerBase : ILoggerBase
     //{
     //    var dump = RH.DumpAsString(new DumpAsStringArgs { name = name, o = o, d = d, onlyNames = onlyNames.ToList() });//  , o, d, onlyNames);
     //    WriteLine(dump);
-    //    WriteLine(AllStringsSE.space);
+    //    WriteLine(AllStrings.space);
     //}
 
     //public void DumpObjects(string name, IList o, DumpProvider d, params string[] onlyNames)
@@ -159,7 +159,7 @@ public abstract partial class LoggerBase : ILoggerBase
 
     public void WriteNumberedList(string what, List<string> list, bool numbered)
     {
-        _writeLineDelegate.Invoke(what + AllStringsSE.colon, EmptyArrays.Strings);
+        _writeLineDelegate.Invoke(what + AllStrings.colon, EmptyArrays.Strings);
         for (int i = 0; i < list.Count; i++)
         {
             if (numbered)
