@@ -1,4 +1,4 @@
-namespace SunamoLogger.Logger.LoggerBaseNS;
+namespace SunamoLogger;
 
 public class DummyLogger : LoggerBase
 {

@@ -1,4 +1,4 @@
-namespace SunamoLogger.Logger.TemplateLoggerBaseNS;
+namespace SunamoLogger;
 
 public class DummyTemplateLogger : TemplateLoggerBase
 {

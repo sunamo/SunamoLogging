@@ -1,4 +1,4 @@
-namespace SunamoLogger._sunamo;
+namespace SunamoLogger;
 
 
 

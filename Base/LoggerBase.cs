@@ -1,4 +1,4 @@
-namespace SunamoLogger.Base;
+namespace SunamoLogger;
 
 
 /// <summary>
