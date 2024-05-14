@@ -24,6 +24,15 @@
     <Compile Include="..\SunamoExceptions\_AddedToAllCsproj\CASunamoExceptions.cs" Link="_linked\SunamoExceptions\_AddedToAllCsproj\CASunamoExceptions.cs" />
     <Compile Include="..\SunamoExceptions\OnlyInSE\Types.cs" Link="_linked\SunamoExceptions\OnlyInSE\Types.cs" />
     <Compile Include="..\SunamoXlfKeys\XlfKeys.cs" Link="_linked\SunamoXlfKeys\XlfKeys.cs" />
+    <Compile Include="..\SunamoFubuCore\Logging\Logger.cs" Link="_linked\SunamoFubuCore\Logging\Logger.cs" />
+    <Compile Include="..\SunamoFubuCsProjFile\_NotMine\Templating\Runtime\TemplateLogger.cs" Link="_linked\SunamoFubuCsProjFile\_NotMine\Templating\Runtime\TemplateLogger.cs" />
+    <Compile Include="..\SunamoExceptions\SHSE.cs" Link="_linked\SunamoExceptions\SHSE.cs" />
+    <Compile Include="..\SunamoEnums\Enums\TwoState.cs" Link="_linked\SunamoEnums\Enums\TwoState.cs" />
+    <Compile Include="..\SunamoEnums\Enums\TypeOfMessage.cs" Link="_linked\SunamoEnums\Enums\TypeOfMessage.cs" />
+    <Compile Include="..\SunamoTypeOfMessage\TypeOfMessage.cs" Link="_linked\SunamoTypeOfMessage\TypeOfMessage.cs" />
+    <Compile Include="..\SunamoCollectionsIndexesWithNull\CAIndexesWithNull.cs" Link="_linked\SunamoCollectionsIndexesWithNull\CAIndexesWithNull.cs" />
+    <Compile Include="..\SunamoShared\Helpers\Runtime\RuntimeHelper.cs" Link="_linked\SunamoShared\Helpers\Runtime\RuntimeHelper.cs" />
+    <Compile Include="..\SunamoThisApp\ThisApp.cs" Link="_linked\SunamoThisApp\ThisApp.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
