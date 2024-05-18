@@ -7,8 +7,6 @@
     <Description>Support for several logging system based on their output</Description>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="SunamoTypeOfMessage" Version="24.2.6.2" />
-    <PackageReference Include="SunamoXlfKeys" Version="24.2.6.2" />
     <Compile Include="..\SunamoInterfaces\Interfaces\IClipboardHelper.cs" Link="_linked\SunamoInterfaces\Interfaces\IClipboardHelper.cs" />
     <Compile Include="..\SunamoInterfaces\Interfaces\ILoggerBase.cs" Link="_linked\SunamoInterfaces\Interfaces\ILoggerBase.cs" />
     <Compile Include="..\SunamoValues\AllStrings.cs" Link="_linked\SunamoValues\AllStrings.cs" />
