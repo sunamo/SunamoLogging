@@ -1,4 +1,10 @@
-namespace SunamoLogger;
+namespace
+#if SunamoDevCode
+SunamoDevCode
+#else
+SunamoLogger
+#endif
+;
 
 
 
