@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 namespace SunamoLogger;
 internal class SHSE
 {
-    internal static string NullToStringOrDefault(string text)
+    public static string NullToStringOrDefault(object n)
     {
-        throw new NotImplementedException();
+        //return NullToStringOrDefault(n, null);
+        return n == null ? " " + Consts.nulled : AllStrings.space + n;
     }
 }

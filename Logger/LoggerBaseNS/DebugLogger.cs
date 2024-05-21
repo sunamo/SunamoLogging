@@ -31,7 +31,7 @@ public class DebugLogger : LoggerBase
     public static void BreakOrReadLine()
     {
 #if DEBUG
-        Debugger.Break();
+        System.Diagnostics.Debugger.Break();
 #elif !DEBUG
 //CL.ReadLine();
 #endif
@@ -67,7 +67,7 @@ public class DebugLogger : LoggerBase
 
     public static void Break()
     {
-        Debugger.Break();
+        System.Diagnostics.Debugger.Break();
     }
 
 
