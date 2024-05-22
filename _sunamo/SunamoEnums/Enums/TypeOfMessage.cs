@@ -5,7 +5,7 @@ namespace SunamoLogger;
 ///     Error/Warning are in tbLastErrorOrWarning, other in tbLastOtherMessage
 ///     Musí být zde kvůli cl které je withoutDep
 /// </summary>
-public enum TypeOfMessage
+internal enum TypeOfMessage
 {
     /// <summary>
     ///     tbLastErrorOrWarning
