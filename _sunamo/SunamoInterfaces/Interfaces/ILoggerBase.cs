@@ -2,7 +2,7 @@ namespace SunamoLogger;
 
 using System.Collections;
 
-internal interface ILoggerBase
+public interface ILoggerBase
 {
     void ClipboardOrDebug(string v, params string[] args);
     bool IsInRightFormat(string text, params string[] args);

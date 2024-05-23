@@ -2,15 +2,15 @@ namespace SunamoLogger;
 
 
 
-internal class RuntimeHelper
+public class RuntimeHelper
 {
-    internal static void EmptyDummyMethod()
+    public static void EmptyDummyMethod()
     {
     }
 
-    internal static void EmptyDummyMethod(string s, params Object[] o)
+    public static void EmptyDummyMethod(string s, params Object[] o)
     {
     }
 
-    internal static Action<TypeOfMessage, string, Object[]> EmptyDummyMethodLogMessage;
+    public static Action<TypeOfMessage, string, Object[]> EmptyDummyMethodLogMessage;
 }

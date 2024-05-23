@@ -1,8 +1,8 @@
 namespace SunamoLogger;
 
-internal class CAIndexesWithNull
+public class CAIndexesWithNull
 {
-    internal static List<int> IndexesWithNull(IList times)
+    public static List<int> IndexesWithNull(IList times)
     {
         List<int> nulled = new List<int>();
         int i = 0;
@@ -17,7 +17,7 @@ internal class CAIndexesWithNull
 
         return nulled;
     }
-    internal static List<int> IndexesWithNullOrEmpty(IList times)
+    public static List<int> IndexesWithNullOrEmpty(IList times)
     {
         List<int> nulled = new List<int>();
         int i = 0;
