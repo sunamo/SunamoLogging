@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SunamoLogger;
+namespace SunamoLogging;
 public class SHSE
 {
     public static string NullToStringOrDefault(object n)

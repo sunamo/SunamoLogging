@@ -1,4 +1,4 @@
-namespace SunamoLogger;
+namespace SunamoLogging;
 public class ThisApp
 {
     public static event Action<TypeOfMessage, string> StatusSetted;

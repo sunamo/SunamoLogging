@@ -1,4 +1,4 @@
-namespace SunamoLogger;
+namespace SunamoLogging;
 public class SHGetLines
 {
     public static List<string> GetLines(string p)

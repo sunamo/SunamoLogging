@@ -1,3 +1,5 @@
+
+namespace SunamoLogging;
 public class TranslateAble
 {
     

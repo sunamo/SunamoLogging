@@ -1,3 +1,5 @@
+
+namespace SunamoLogging;
 using System.Diagnostics;
 using System.Text;
 
