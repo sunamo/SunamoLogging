@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class SHJoinPairs
+internal class SHJoinPairs
 {
-    //public static Func<string[], string> JoinPairs;
+    //internal static Func<string[], string> JoinPairs;
 
-    public static string JoinPairs(string firstDelimiter, string secondDelimiter, params string[] parts)
+    internal static string JoinPairs(string firstDelimiter, string secondDelimiter, params string[] parts)
     {
         //InitApp.TemplateLogger.NotEvenNumberOfElements(type, "JoinPairs", @"args", parts);
         //InitApp.TemplateLogger.AnyElementIsNull(type, "JoinPairs", @"args", parts);

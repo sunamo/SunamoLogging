@@ -1,7 +1,7 @@
 namespace SunamoLogging;
-public class sess
+internal class sess
 {
-    public static string i18n(string tryAFewSecondsLaterAfterFullyInitialized)
+    internal static string i18n(string tryAFewSecondsLaterAfterFullyInitialized)
     {
         return tryAFewSecondsLaterAfterFullyInitialized;
     }

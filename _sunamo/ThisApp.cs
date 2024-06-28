@@ -1,9 +1,9 @@
 namespace SunamoLogging;
-public class ThisApp
+internal class ThisApp
 {
-    public static event Action<TypeOfMessage, string> StatusSetted;
+    internal static event Action<TypeOfMessage, string> StatusSetted;
 
-    public static void SetStatus(TypeOfMessage st, string status, params string[] args)
+    internal static void SetStatus(TypeOfMessage st, string status, params string[] args)
     {
         var format = /*string.Format*/ string.Format(status, args);
         if (format.Trim() != string.Empty)
@@ -19,7 +19,7 @@ public class ThisApp
             }
         }
     }
-    public static void Ordinal(string v, params string[] o)
+    internal static void Ordinal(string v, params string[] o)
     {
         SetStatus(TypeOfMessage.Ordinal, v, o);
     }
