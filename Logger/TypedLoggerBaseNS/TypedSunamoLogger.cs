@@ -1,10 +1,3 @@
-namespace
-#if SunamoDevCode
-SunamoDevCode
-#else
-SunamoLogger
-#endif
-;
 
 
 
@@ -23,3 +16,4 @@ public class TypedSunamoLogger : TypedLoggerBase
 
 
 }
+
