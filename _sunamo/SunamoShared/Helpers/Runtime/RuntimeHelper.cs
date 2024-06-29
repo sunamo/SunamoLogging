@@ -12,5 +12,5 @@ internal class RuntimeHelper
     {
     }
 
-    internal static Action<TypeOfMessage, string, Object[]> EmptyDummyMethodLogMessage;
+    internal static Action<TypeOfMessageLogging, string, Object[]> EmptyDummyMethodLogMessage;
 }

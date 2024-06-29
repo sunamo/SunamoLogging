@@ -6,73 +6,73 @@ public abstract partial class TemplateLoggerBase
 {
     public void SavedToDrive(string v)
     {
-        WriteLine(TypeOfMessage.Success, sess.i18n(XlfKeys.SavedToDrive) + ": " + v);
+        WriteLine(TypeOfMessageLogging.Success, sess.i18n(XlfKeys.SavedToDrive) + ": " + v);
     }
 
     public void TryAFewSecondsLaterAfterFullyInitialized()
     {
-        WriteLine(TypeOfMessage.Information, sess.i18n(XlfKeys.TryAFewSecondsLaterAfterFullyInitialized));
+        WriteLine(TypeOfMessageLogging.Information, sess.i18n(XlfKeys.TryAFewSecondsLaterAfterFullyInitialized));
     }
 
     public void Finished(string nameOfOperation)
     {
-        WriteLine(TypeOfMessage.Success, nameOfOperation + " - " + sess.i18n(XlfKeys.Finished));
+        WriteLine(TypeOfMessageLogging.Success, nameOfOperation + " - " + sess.i18n(XlfKeys.Finished));
     }
     public void EndRunTime()
     {
-        WriteLine(TypeOfMessage.Ordinal, Messages.AppWillBeTerminated);
+        WriteLine(TypeOfMessageLogging.Ordinal, Messages.AppWillBeTerminated);
     }
     #region Success
     public void ResultCopiedToClipboard()
     {
-        WriteLine(TypeOfMessage.Success, "Result was successfully copied to clipboard.");
+        WriteLine(TypeOfMessageLogging.Success, "Result was successfully copied to clipboard.");
     }
 
     public void CopiedToClipboard(string what)
     {
-        WriteLine(TypeOfMessage.Success, what + " was successfully copied to clipboard.");
+        WriteLine(TypeOfMessageLogging.Success, what + " was successfully copied to clipboard.");
     }
     #endregion
     #region Error
     public void CouldNotBeParsed(string entity, string text)
     {
-        WriteLine(TypeOfMessage.Error, entity + " with value " + text + " could not be parsed");
+        WriteLine(TypeOfMessageLogging.Error, entity + " with value " + text + " could not be parsed");
     }
     public void SomeErrorsOccuredSeeLog()
     {
-        WriteLine(TypeOfMessage.Error, sess.i18n(XlfKeys.SomeErrorsOccuredSeeLog));
+        WriteLine(TypeOfMessageLogging.Error, sess.i18n(XlfKeys.SomeErrorsOccuredSeeLog));
     }
     public void FolderDontExists(string folder)
     {
-        WriteLine(TypeOfMessage.Error, sess.i18n(XlfKeys.Folder) + " " + folder + " doesn't exists.");
+        WriteLine(TypeOfMessageLogging.Error, sess.i18n(XlfKeys.Folder) + " " + folder + " doesn't exists.");
     }
     public void FileDontExists(string selectedFile)
     {
-        WriteLine(TypeOfMessage.Error, sess.i18n(XlfKeys.File) + " " + selectedFile + " doesn't exists.");
+        WriteLine(TypeOfMessageLogging.Error, sess.i18n(XlfKeys.File) + " " + selectedFile + " doesn't exists.");
     }
 
     #endregion
     #region Information
     public void LoadedFromStorage(string item)
     {
-        WriteLine(TypeOfMessage.Information, sess.i18n(XlfKeys.LoadedFromStorage) + ": " + item);
+        WriteLine(TypeOfMessageLogging.Information, sess.i18n(XlfKeys.LoadedFromStorage) + ": " + item);
     }
 
     public void InsertAsIndexesZeroBased()
     {
-        WriteLine(TypeOfMessage.Information, sess.i18n(XlfKeys.InsertAsIndexesZeroBased));
+        WriteLine(TypeOfMessageLogging.Information, sess.i18n(XlfKeys.InsertAsIndexesZeroBased));
     }
     public void UnfortunatelyBadFormatPleaseTryAgain()
     {
-        WriteLine(TypeOfMessage.Information, sess.i18n(XlfKeys.UnfortunatelyBadFormatPleaseTryAgain) + ".");
+        WriteLine(TypeOfMessageLogging.Information, sess.i18n(XlfKeys.UnfortunatelyBadFormatPleaseTryAgain) + ".");
     }
     public void OperationWasStopped()
     {
-        WriteLine(TypeOfMessage.Information, sess.i18n(XlfKeys.OperationWasStopped));
+        WriteLine(TypeOfMessageLogging.Information, sess.i18n(XlfKeys.OperationWasStopped));
     }
     public void NoData()
     {
-        WriteLine(TypeOfMessage.Information, sess.i18n(XlfKeys.PleaseEnterRightInputData));
+        WriteLine(TypeOfMessageLogging.Information, sess.i18n(XlfKeys.PleaseEnterRightInputData));
     }
     /// <summary>
     /// Zmena: metoda nezapisuje primo na konzoli, misto toho pouze vraci retezec
@@ -80,7 +80,7 @@ public abstract partial class TemplateLoggerBase
     /// <param name="fn"></param>
     public void SuccessfullyResized(string fn)
     {
-        WriteLine(TypeOfMessage.Information, sess.i18n(XlfKeys.SuccessfullyResizedTo) + " " + fn);
+        WriteLine(TypeOfMessageLogging.Information, sess.i18n(XlfKeys.SuccessfullyResizedTo) + " " + fn);
     }
 
 
@@ -97,7 +97,7 @@ public abstract partial class TemplateLoggerBase
         List<int> nulled = CAIndexesWithNull.IndexesWithNullOrEmpty(args);
         if (nulled.Count > 0)
         {
-            WriteLine(TypeOfMessage.Information, Exceptions.AnyElementIsNullOrEmpty(FullNameOfExecutedCode(t.Item1, t.Item2), nameOfCollection, nulled));
+            WriteLine(TypeOfMessageLogging.Information, Exceptions.AnyElementIsNullOrEmpty(FullNameOfExecutedCode(t.Item1, t.Item2), nameOfCollection, nulled));
             return true;
         }
         return false;
@@ -106,12 +106,12 @@ public abstract partial class TemplateLoggerBase
     public void HaveUnallowedValue(string controlNameOrText)
     {
         controlNameOrText = controlNameOrText.TrimEnd(AllChars.colon);
-        WriteLine(TypeOfMessage.Appeal, controlNameOrText + " have unallowed value");
+        WriteLine(TypeOfMessageLogging.Appeal, controlNameOrText + " have unallowed value");
     }
     public void MustHaveValue(string controlNameOrText)
     {
         controlNameOrText = controlNameOrText.TrimEnd(AllChars.colon);
-        WriteLine(TypeOfMessage.Appeal, controlNameOrText + " must have value");
+        WriteLine(TypeOfMessageLogging.Appeal, controlNameOrText + " must have value");
     }
     #endregion
 }

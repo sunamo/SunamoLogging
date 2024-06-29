@@ -10,7 +10,7 @@ public class TypedSunamoLogger : TypedLoggerBase
     {
     }
 
-    public static void WriteLineWorker(TypeOfMessage tz, string text, params string[] args)
+    public static void WriteLineWorker(TypeOfMessageLogging tz, string text, params string[] args)
     {
         ThisApp.SetStatus(tz, text, args);
     }

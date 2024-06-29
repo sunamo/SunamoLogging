@@ -4,14 +4,14 @@ namespace SunamoLogging;
 
 public abstract partial class TemplateLoggerBase
 {
-    public TemplateLoggerBase(Action<TypeOfMessage, string, string[]> writeLineDelegate)
+    public TemplateLoggerBase(Action<TypeOfMessageLogging, string, string[]> writeLineDelegate)
     {
         _writeLineDelegate = writeLineDelegate;
     }
 
 
     static Type type = typeof(TemplateLoggerBase);
-    private Action<TypeOfMessage, string, string[]> _writeLineDelegate;
+    private Action<TypeOfMessageLogging, string, string[]> _writeLineDelegate;
 
     /// <summary>
     /// Return true if number of counts is odd
@@ -24,7 +24,7 @@ public abstract partial class TemplateLoggerBase
     {
         if (args.Count() % 2 == 1)
         {
-            WriteLine(TypeOfMessage.Error, Exceptions.NotEvenNumberOfElements(FullNameOfExecutedCode(t.Item1, t.Item2), nameOfCollection));
+            WriteLine(TypeOfMessageLogging.Error, Exceptions.NotEvenNumberOfElements(FullNameOfExecutedCode(t.Item1, t.Item2), nameOfCollection));
             return false;
         }
         return true;
@@ -37,7 +37,7 @@ public abstract partial class TemplateLoggerBase
         return ThrowEx.FullNameOfExecutedCode(t.Item1, t.Item2);
     }
 
-    private void WriteLine(TypeOfMessage error, string v)
+    private void WriteLine(TypeOfMessageLogging error, string v)
     {
         _writeLineDelegate(error, v, EmptyArrays.Strings);
     }
@@ -56,7 +56,7 @@ public abstract partial class TemplateLoggerBase
         List<int> nulled = CAIndexesWithNull.IndexesWithNull(args);
         if (nulled.Count > 0)
         {
-            WriteLine(TypeOfMessage.Information, Exceptions.AnyElementIsNullOrEmpty(FullNameOfExecutedCode(t.Item1, t.Item2), nameOfCollection, nulled));
+            WriteLine(TypeOfMessageLogging.Information, Exceptions.AnyElementIsNullOrEmpty(FullNameOfExecutedCode(t.Item1, t.Item2), nameOfCollection, nulled));
             return true;
         }
         return false;

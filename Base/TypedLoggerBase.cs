@@ -8,9 +8,9 @@ namespace SunamoLogging;
 public abstract class TypedLoggerBase
 {
     private static Type type = typeof(TypedLoggerBase);
-    private Action<TypeOfMessage, string, string[]> _typedWriteLineDelegate;
+    private Action<TypeOfMessageLogging, string, string[]> _typedWriteLineDelegate;
 
-    public TypedLoggerBase(Action<TypeOfMessage, string, string[]> typedWriteLineDelegate)
+    public TypedLoggerBase(Action<TypeOfMessageLogging, string, string[]> typedWriteLineDelegate)
     {
         _typedWriteLineDelegate = typedWriteLineDelegate;
     }
@@ -39,48 +39,48 @@ public abstract class TypedLoggerBase
     #region 
     public void Success(string text, params string[] p)
     {
-        _typedWriteLineDelegate.Invoke(TypeOfMessage.Success, text, p);
+        _typedWriteLineDelegate.Invoke(TypeOfMessageLogging.Success, text, p);
     }
 
     public void Error(string text, params string[] p)
     {
-        _typedWriteLineDelegate.Invoke(TypeOfMessage.Error, text, p);
+        _typedWriteLineDelegate.Invoke(TypeOfMessageLogging.Error, text, p);
     }
     public void Warning(string text, params string[] p)
     {
-        _typedWriteLineDelegate.Invoke(TypeOfMessage.Warning, text, p);
+        _typedWriteLineDelegate.Invoke(TypeOfMessageLogging.Warning, text, p);
     }
 
     public void Appeal(string text, params string[] p)
     {
-        _typedWriteLineDelegate.Invoke(TypeOfMessage.Appeal, text, p);
+        _typedWriteLineDelegate.Invoke(TypeOfMessageLogging.Appeal, text, p);
     }
 
     public void Ordinal(string text, params string[] p)
     {
-        _typedWriteLineDelegate.Invoke(TypeOfMessage.Ordinal, text, p);
+        _typedWriteLineDelegate.Invoke(TypeOfMessageLogging.Ordinal, text, p);
     }
 
-    public void WriteLine(TypeOfMessage t, string m)
+    public void WriteLine(TypeOfMessageLogging t, string m)
     {
         switch (t)
         {
-            case TypeOfMessage.Error:
+            case TypeOfMessageLogging.Error:
                 Error(m);
                 break;
-            case TypeOfMessage.Warning:
+            case TypeOfMessageLogging.Warning:
                 Warning(m);
                 break;
-            case TypeOfMessage.Information:
+            case TypeOfMessageLogging.Information:
                 Information(m);
                 break;
-            case TypeOfMessage.Ordinal:
+            case TypeOfMessageLogging.Ordinal:
                 Ordinal(m);
                 break;
-            case TypeOfMessage.Appeal:
+            case TypeOfMessageLogging.Appeal:
                 Appeal(m);
                 break;
-            case TypeOfMessage.Success:
+            case TypeOfMessageLogging.Success:
                 Success(m);
                 break;
             default:
@@ -92,7 +92,7 @@ public abstract class TypedLoggerBase
     public void Information(string text, params string[] p)
     {
 
-        _typedWriteLineDelegate.Invoke(TypeOfMessage.Information, text, p);
+        _typedWriteLineDelegate.Invoke(TypeOfMessageLogging.Information, text, p);
     }
     #endregion
 }

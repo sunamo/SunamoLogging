@@ -54,7 +54,7 @@ public class DebugLogger : LoggerBase
     {
     }
 #if DEBUG //2
-    public static void DebugWriteLine(TypeOfMessage tz, string text, params Object[] args)
+    public static void DebugWriteLine(TypeOfMessageLogging tz, string text, params Object[] args)
     {
         //DebugLogger.DebugWriteLine(tz.ToString() + AllStrings.cs2 + string.Format(text, args));
     }
