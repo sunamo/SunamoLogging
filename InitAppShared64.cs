@@ -8,7 +8,7 @@ namespace SunamoLogging;
 /// Cycle detected. 
 /// SunamoThisApp -> SunamoLogger 23.12.22.1 -> SunamoI18N 23.12.21.1 -> SunamoThisApp(>= 23.12.20.2).
 /// </summary>
-public partial class InitApp
+public class InitApp
 {
     /// <summary>
     /// Alternatives are:

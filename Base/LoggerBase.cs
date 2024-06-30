@@ -1,10 +1,6 @@
 namespace SunamoLogging;
 
-
-/// <summary>
-/// Musí být v sunamo, jsou tu od něj odvozeny další třídy jako např. DebugLogger
-/// </summary>
-public abstract partial class LoggerBase : ILoggerBase
+public abstract class LoggerBase : ILoggerBase
 {
     // TODO: Make logger public class as base and replace all occurences With Instance
     protected Action<string, string[]> _writeLineDelegate;
@@ -178,5 +174,8 @@ public abstract partial class LoggerBase : ILoggerBase
         list.ForEach(d => WriteLine(d));
     }
 
-
+    public void TwoState(bool ret, params string[] toAppend)
+    {
+        WriteLine(ret.ToString() + AllStrings.comma + string.Join(AllChars.comma, toAppend));
+    }
 }
