@@ -1,4 +1,4 @@
-namespace SunamoLogging;
+namespace SunamoLogging._sunamo.SunamoXlfKeys;
 
 
 

@@ -1,4 +1,4 @@
-namespace SunamoLogging;
+namespace SunamoLogging._sunamo.SunamoStringJoinPairs;
 
 using System;
 using System.Collections.Generic;

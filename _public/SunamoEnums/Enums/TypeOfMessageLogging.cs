@@ -1,4 +1,4 @@
-namespace SunamoLogging;
+namespace SunamoLogging._public.SunamoEnums.Enums;
 
 
 

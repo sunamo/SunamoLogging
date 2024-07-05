@@ -1,4 +1,4 @@
-namespace SunamoLogging;
+namespace SunamoLogging.Logger.LoggerBaseNS;
 
 
 public class SunamoLogger : LoggerBase

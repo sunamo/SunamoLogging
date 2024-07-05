@@ -1,4 +1,4 @@
-namespace SunamoLogging;
+namespace SunamoLogging._sunamo.SunamoThisApp;
 internal class ThisApp
 {
     internal static event Action<TypeOfMessageLogging, string> StatusSetted;

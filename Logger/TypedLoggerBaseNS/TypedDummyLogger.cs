@@ -1,4 +1,4 @@
-namespace SunamoLogging;
+namespace SunamoLogging.Logger.TypedLoggerBaseNS;
 
 
 public class TypedDummyLogger : TypedLoggerBase

@@ -1,5 +1,5 @@
 
-namespace SunamoLogging;
+namespace SunamoLogging._sunamo.SunamoExceptions.OnlyInSE;
 using System.Diagnostics;
 using System.Text;
 
