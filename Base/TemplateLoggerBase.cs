@@ -1,5 +1,3 @@
-
-
 namespace SunamoLogging.Base;
 
 public abstract class TemplateLoggerBase

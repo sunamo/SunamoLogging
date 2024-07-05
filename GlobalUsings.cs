@@ -28,3 +28,5 @@ global using SunamoLogging._sunamo.SunamoExceptions._AddedToAllCsproj;
 global using SunamoLogging._sunamo.SunamoLang.SunamoI18N;
 global using SunamoLogging._sunamo.SunamoValues.Constants;
 global using SunamoLogging._sunamo.SunamoShared.Helpers.Runtime;
+global using System.Net;
+global using System.Threading.Tasks;
