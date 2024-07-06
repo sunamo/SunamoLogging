@@ -12,9 +12,9 @@
     <Folder Include="Interfaces\" />
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>$(DefineConstants);ASYNC;SunamoLogger</DefineConstants>
+    <DefineConstants>$(DefineConstants);ASYNC;SunamoLogger;SunamoLogging</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DefineConstants>$(DefineConstants);ASYNC;SunamoLogger</DefineConstants>
+    <DefineConstants>$(DefineConstants);ASYNC;SunamoLogger;SunamoLogging</DefineConstants>
   </PropertyGroup>
 </Project>
