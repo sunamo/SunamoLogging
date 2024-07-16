@@ -1,6 +1,6 @@
+
 namespace SunamoLogging;
-
-
+using SunamoLogging.Logger.LoggerBaseNS;
 
 /// <summary>
 /// Nemůže být v SunamoThisApp kvůli:

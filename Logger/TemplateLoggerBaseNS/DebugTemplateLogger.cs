@@ -1,8 +1,7 @@
-namespace SunamoLogging.Logger.TemplateLoggerBaseNS;
-// Cant be DEBUG, in dependent assembly often dont see this classes even if all projects is Debug
-//#if DEBUG
 
-#if DEBUG //2
+namespace SunamoLogging.Logger.TemplateLoggerBaseNS;
+using SunamoLogging.Logger.LoggerBaseNS;
+
 public class DebugTemplateLogger : TemplateLoggerBase
 {
     public static Type type = typeof(DebugTemplateLogger);
@@ -28,11 +27,19 @@ public class DebugTemplateLogger : TemplateLoggerBase
         }
     }
 
-    private DebugTemplateLogger() : base(DebugLogger.DebugWriteLine)
+    private DebugTemplateLogger() : base(DebugWriteLine)
     {
     }
 
-
+    /// <summary>
+    /// Nemůžu použít DebugLogger.DebugWriteLine - do release balíčku ho nedostanu přes #if DEBUG
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="m"></param>
+    /// <param name="args"></param>
+    static void DebugWriteLine(TypeOfMessageLogging t, string m, params string[] args)
+    {
+        // todo vykreslit barevně
+        Console.WriteLine(string.Format(m, args));
+    }
 }
-#endif
-//#endif
