@@ -1,12 +1,5 @@
 namespace SunamoLogging.Logger.LoggerBaseNS;
 
-// Cant be DEBUG, in dependent assembly often dont see this classes even if all projects is Debug
-//#if DEBUG
-//namespace sunamo.Essential
-//{
-
-
-
 /// <summary>
 /// Tento //////DebugLogger.Instance je ve sunamo, obsahuje jedinou metodu, kterou používej ve //////DebugLogger.Instance např. apps
 /// Pokud chceš rychleji zapisovat a nepotřebuješ explicitně nějaké metody, vytvoř si vlastní třídu //////DebugLogger.Instance v projektu aplikace. Ono by s_tejně kompilátor měl poznat že jen volá něco jiného a tak by to mělo být stejně efektivní

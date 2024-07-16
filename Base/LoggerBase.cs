@@ -113,7 +113,7 @@ public abstract class LoggerBase : ILoggerBase
     {
         if (IsActive)
         {
-            _writeLineDelegate.Invoke(SHSE.NullToStringOrDefault(text), args);
+            _writeLineDelegate.Invoke(SH.NullToStringOrDefault(text), args);
         }
     }
 

@@ -1,5 +1,5 @@
 namespace SunamoLogging._sunamo.SunamoExceptions;
-internal class SHSE
+internal class SH
 {
     internal static string NullToStringOrDefault(object n)
     {
