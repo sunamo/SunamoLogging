@@ -1,5 +1,5 @@
-namespace SunamoLogging.Base;
 
+namespace SunamoLogging.Base;
 public abstract class LoggerBase : ILoggerBase
 {
     // TODO: Make logger public class as base and replace all occurences With Instance
