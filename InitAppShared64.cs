@@ -1,24 +1,20 @@
-
 namespace SunamoLogging;
-using SunamoLogging.Logger.LoggerBaseNS;
 
 /// <summary>
-/// Nemůže být v SunamoThisApp kvůli:
-/// 
-/// Cycle detected. 
-/// SunamoThisApp -> SunamoLogger 23.12.22.1 -> SunamoI18N 23.12.21.1 -> SunamoThisApp(>= 23.12.20.2).
+///     Nemůže být v SunamoThisApp kvůli:
+///     Cycle detected.
+///     SunamoThisApp -> SunamoLogger 23.12.22.1 -> SunamoI18N 23.12.21.1 -> SunamoThisApp(>= 23.12.20.2).
 /// </summary>
 public class InitApp
 {
     /// <summary>
-    /// Alternatives are:
-    /// InitApp.SetDebugLogger
-    /// CmdApp.SetLogger
-    /// WpfApp.SetLogger
+    ///     Alternatives are:
+    ///     InitApp.SetDebugLogger
+    ///     CmdApp.SetLogger
+    ///     WpfApp.SetLogger
     /// </summary>
     public static void SetDebugLogger()
     {
-
 #if DEBUG
         Logger = DebugLogger.Instance;
 
@@ -32,13 +28,13 @@ public class InitApp
         TypedLogger =
 #if DEBUG2 && DEBUG
             TypedDebugLogger.Instance;
-#elif !DEBUG2 
-        null;
+#elif !DEBUG2
+            null;
 #endif
-
     }
 
     #region Must be set during app initializing
+
     //public static IClipboardHelper Clipboard
     //{
     //    set
@@ -46,8 +42,9 @@ public class InitApp
     //        ClipboardHelper.Instance = value;
     //    }
     //}
-    public static ILoggerBase Logger = null;
-    public static TypedLoggerBase TypedLogger = null;
-    public static TemplateLoggerBase TemplateLogger = null;
+    public static ILoggerBase Logger;
+    public static TypedLoggerBase TypedLogger;
+    public static TemplateLoggerBase TemplateLogger;
+
     #endregion
 }
