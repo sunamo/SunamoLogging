@@ -11,7 +11,6 @@ global using SunamoLogging.Base;
 global using SunamoLogging._sunamo.SunamoCollectionsIndexesWithNull;
 global using SunamoLogging._sunamo.SunamoThisApp;
 global using SunamoLogging._sunamo.SunamoValues;
-
 global using SunamoLogging._public.SunamoEnums.Enums;
 global using SunamoLogging._public.SunamoInterfaces.Interfaces;
 global using SunamoLogging._sunamo.SunamoExceptions.OnlyInSE;
@@ -27,3 +26,7 @@ global using SunamoLogging.Logger.TemplateLoggerBaseNS;
 global using SunamoLogging.Logger.TypedLoggerBaseNS;
 global using SunamoLogging._sunamo.SunamoStringGetLines;
 global using SunamoLogging._sunamo.SunamoStringJoinPairs;
+global using Microsoft.Extensions.Logging;
+global using System.Threading.Tasks;
+global using SunamoLogging.FileLogger;
+global using SunamoLogging.Services;

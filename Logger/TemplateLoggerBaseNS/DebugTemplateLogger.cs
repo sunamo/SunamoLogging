@@ -1,19 +1,15 @@
 
 namespace SunamoLogging.Logger.TemplateLoggerBaseNS;
-using SunamoLogging.Logger.LoggerBaseNS;
-
 public class DebugTemplateLogger : TemplateLoggerBase
 {
     public static Type type = typeof(DebugTemplateLogger);
     static DebugTemplateLogger instance =
-
 #if DEBUG2
     new DebugTemplateLogger();
 #elif !DEBUG2
     //new DebugLogger(DebugWriteLine);
     null;
 #endif
-
     public static TemplateLoggerBase Instance
     {
         get
@@ -26,11 +22,9 @@ public class DebugTemplateLogger : TemplateLoggerBase
             return instance;
         }
     }
-
     private DebugTemplateLogger() : base(DebugWriteLine)
     {
     }
-
     /// <summary>
     /// Nemůžu použít DebugLogger.DebugWriteLine - do release balíčku ho nedostanu přes #if DEBUG
     /// </summary>
