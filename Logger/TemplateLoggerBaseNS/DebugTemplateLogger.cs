@@ -1,4 +1,3 @@
-
 namespace SunamoLogging.Logger.TemplateLoggerBaseNS;
 public class DebugTemplateLogger : TemplateLoggerBase
 {

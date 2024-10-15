@@ -1,4 +1,3 @@
-
 namespace SunamoLogging._sunamo;
 internal class XlfKeys
 {

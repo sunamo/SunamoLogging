@@ -1,4 +1,3 @@
-
 namespace SunamoLogging.Logger.TypedLoggerBaseNS;
 public class TypedDebugLogger : TypedLoggerBase
 {

@@ -1,4 +1,3 @@
-
 namespace SunamoLogging.Base;
 public abstract class LoggerBase : ILoggerBase
 {

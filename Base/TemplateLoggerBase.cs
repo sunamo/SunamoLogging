@@ -95,7 +95,7 @@ public abstract class TemplateLoggerBase
         List<int> nulled = CAIndexesWithNull.IndexesWithNullOrEmpty(args);
         if (nulled.Count > 0)
         {
-            WriteLine(TypeOfMessageLogging.Information, Exceptions.AnyElementIsNullOrEmpty(FullNameOfExecutedCode(t.Item1, t.Item2), nameOfCollection, nulled));
+            WriteLine(TypeOfMessageLogging.Information, Exceptions.AnyElementIsNullOrEmpty(FullNameOfExecutedCode(), nameOfCollection, nulled));
             return true;
         }
         return false;
@@ -133,17 +133,17 @@ public abstract class TemplateLoggerBase
     {
         if (args.Count() % 2 == 1)
         {
-            WriteLine(TypeOfMessageLogging.Error, Exceptions.NotEvenNumberOfElements(FullNameOfExecutedCode(t.Item1, t.Item2), nameOfCollection));
+            WriteLine(TypeOfMessageLogging.Error, Exceptions.NotEvenNumberOfElements(FullNameOfExecutedCode(), nameOfCollection));
             return false;
         }
         return true;
     }
 
-    Tuple<string, string, string> t => Exc.GetStackTrace2(true);
 
-    private string FullNameOfExecutedCode(object type, string methodName)
+
+    private string FullNameOfExecutedCode()
     {
-        return ThrowEx.FullNameOfExecutedCode(t.Item1, t.Item2);
+        return ThrowEx.FullNameOfExecutedCode();
     }
 
     private void WriteLine(TypeOfMessageLogging error, string v)
@@ -165,7 +165,7 @@ public abstract class TemplateLoggerBase
         List<int> nulled = CAIndexesWithNull.IndexesWithNull(args);
         if (nulled.Count > 0)
         {
-            WriteLine(TypeOfMessageLogging.Information, Exceptions.AnyElementIsNullOrEmpty(FullNameOfExecutedCode(t.Item1, t.Item2), nameOfCollection, nulled));
+            WriteLine(TypeOfMessageLogging.Information, Exceptions.AnyElementIsNullOrEmpty(FullNameOfExecutedCode(), nameOfCollection, nulled));
             return true;
         }
         return false;

@@ -1,4 +1,3 @@
-
 namespace SunamoLogging.FileLogger;
 using Microsoft.Extensions.Logging;
 
