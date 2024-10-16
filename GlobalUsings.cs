@@ -20,3 +20,4 @@ global using System.Reflection;
 global using System.Net;
 global using SunamoLogging.Logger.LoggerBaseNS;
 global using SunamoLogging._sunamo.SunamoValues;
+global using System.Diagnostics.CodeAnalysis;
