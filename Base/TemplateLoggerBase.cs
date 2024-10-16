@@ -103,12 +103,12 @@ public abstract class TemplateLoggerBase
 
     public void HaveUnallowedValue(string controlNameOrText)
     {
-        controlNameOrText = controlNameOrText.TrimEnd(AllChars.colon);
+        controlNameOrText = controlNameOrText.TrimEnd(':');
         WriteLine(TypeOfMessageLogging.Appeal, controlNameOrText + " have unallowed value");
     }
     public void MustHaveValue(string controlNameOrText)
     {
-        controlNameOrText = controlNameOrText.TrimEnd(AllChars.colon);
+        controlNameOrText = controlNameOrText.TrimEnd(':');
         WriteLine(TypeOfMessageLogging.Appeal, controlNameOrText + " must have value");
     }
     #endregion
