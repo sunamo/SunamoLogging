@@ -3,19 +3,24 @@ public class FileLogger : ILogger
 {
     private string filePath;
     private static object _lock = new object();
+
+    public List<LogLevel> LevelsToLog { get; set; } = [LogLevel.Warning | LogLevel.Error | LogLevel.Critical];
+
     public FileLogger(string path)
     {
         filePath = path;
     }
+
     public IDisposable BeginScope<TState>(TState state)
     {
         return null;
     }
+
     public bool IsEnabled(LogLevel logLevel)
     {
-        //return logLevel == LogLevel.Trace;
-        return true;
+        return LevelsToLog.Contains(logLevel);
     }
+
     public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
     {
         if (formatter != null)
