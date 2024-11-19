@@ -5,7 +5,7 @@ public abstract class LoggerBase : ILoggerBase
     protected Action<string, string[]> _writeLineDelegate;
     public bool IsActive = true;
     private static Type type = typeof(LoggerBase);
-    private StringBuilder _sb = new StringBuilder();
+    private StringBuilder _sb = new();
 
     protected LoggerBase()
     {

@@ -1,13 +1,7 @@
 ﻿namespace SunamoLogging.FileLogger;
 
-public class FileLoggerProvider : ILoggerProvider
+public class FileLoggerProvider(string _path) : ILoggerProvider
 {
-    private string path;
-    public FileLoggerProvider(string _path)
-    {
-        path = _path;
-    }
-
     public static FileLoggerProvider CustomDirectory(string directory, string appName)
     {
         var filePath = Path.Combine(directory, appName);
@@ -23,10 +17,11 @@ public class FileLoggerProvider : ILoggerProvider
 
     public ILogger CreateLogger(string categoryName)
     {
-        return new FileLogger(path);
+        return new FileLogger(_path);
     }
 
     public void Dispose()
     {
+        GC.SuppressFinalize(this);
     }
 }

@@ -4,7 +4,7 @@ namespace SunamoLogging.Logger.TypedLoggerBaseNS;
 
 public class TypedSunamoLogger : TypedLoggerBase
 {
-    public static TypedSunamoLogger Instance = new TypedSunamoLogger();
+    public static TypedSunamoLogger Instance = new();
 
     private TypedSunamoLogger() : base(WriteLineWorker)
     {

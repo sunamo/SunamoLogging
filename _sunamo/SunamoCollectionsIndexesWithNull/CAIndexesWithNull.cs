@@ -4,7 +4,7 @@ internal class CAIndexesWithNull
 {
     internal static List<int> IndexesWithNull(IList times)
     {
-        List<int> nulled = new List<int>();
+        List<int> nulled = [];
         int i = 0;
         foreach (var item in times)
         {
@@ -19,7 +19,7 @@ internal class CAIndexesWithNull
     }
     internal static List<int> IndexesWithNullOrEmpty(IList times)
     {
-        List<int> nulled = new List<int>();
+        List<int> nulled = [];
         int i = 0;
         foreach (var item in times)
         {

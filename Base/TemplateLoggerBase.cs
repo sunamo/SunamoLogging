@@ -1,6 +1,6 @@
 namespace SunamoLogging.Base;
 
-public abstract class TemplateLoggerBase
+public abstract class TemplateLoggerBase(Action<TypeOfMessageLogging, string, string[]> writeLineDelegate)
 {
     public void SavedToDrive(string v)
     {
@@ -111,16 +111,11 @@ public abstract class TemplateLoggerBase
         controlNameOrText = controlNameOrText.TrimEnd(':');
         WriteLine(TypeOfMessageLogging.Appeal, controlNameOrText + " must have value");
     }
-    #endregion
 
-    public TemplateLoggerBase(Action<TypeOfMessageLogging, string, string[]> writeLineDelegate)
-    {
-        _writeLineDelegate = writeLineDelegate;
-    }
+    #endregion
 
 
     static Type type = typeof(TemplateLoggerBase);
-    private Action<TypeOfMessageLogging, string, string[]> _writeLineDelegate;
 
     /// <summary>
     /// Return true if number of counts is odd
@@ -148,7 +143,7 @@ public abstract class TemplateLoggerBase
 
     private void WriteLine(TypeOfMessageLogging error, string v)
     {
-        _writeLineDelegate(error, v, EmptyArrays.Strings);
+        writeLineDelegate(error, v, EmptyArrays.Strings);
     }
 
 

@@ -4,7 +4,7 @@ namespace SunamoLogging.Logger.LoggerBaseNS;
 /// Tento //////DebugLogger.Instance je ve sunamo, obsahuje jedinou metodu, kterou používej ve //////DebugLogger.Instance např. apps
 /// Pokud chceš rychleji zapisovat a nepotřebuješ explicitně nějaké metody, vytvoř si vlastní třídu //////DebugLogger.Instance v projektu aplikace. Ono by s_tejně kompilátor měl poznat že jen volá něco jiného a tak by to mělo být stejně efektivní
 /// </summary>
-public class DebugLogger : LoggerBase
+public class DebugLogger(Action<string, string[]> writeLineHandler) : LoggerBase(writeLineHandler)
 {
     public static Type type = typeof(DebugLogger);
 
@@ -36,16 +36,6 @@ public class DebugLogger : LoggerBase
     /// Must be always in #if debug - otherwise throw anonymous error in release and its hard to find it!!!
     /// </summary>
     public static DebugLogger instance = null;
-    //#if DEBUG
-    //    new DebugLogger(DebugWriteLine);
-    //#elif !DEBUG2
-    ////new DebugLogger(DebugWriteLine);
-    //null;
-    //#endif
-
-    public DebugLogger(Action<string, string[]> writeLineHandler) : base(writeLineHandler)
-    {
-    }
 #if DEBUG //2
     public static void DebugWriteLine(TypeOfMessageLogging tz, string text, params Object[] args)
     {

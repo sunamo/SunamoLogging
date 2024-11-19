@@ -3,7 +3,7 @@ namespace SunamoLogging.Logger.LoggerBaseNS;
 
 public class SunamoLogger : LoggerBase
 {
-    public static SunamoLogger Instance = new SunamoLogger(WriteLineWorker);
+    public static SunamoLogger Instance = new(WriteLineWorker);
 
     private SunamoLogger()
     {

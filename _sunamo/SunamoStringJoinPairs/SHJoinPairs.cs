@@ -9,7 +9,7 @@ internal class SHJoinPairs
         //InitApp.TemplateLogger.NotEvenNumberOfElements(type, "JoinPairs", @"args", parts);
         //InitApp.TemplateLogger.AnyElementIsNull(type, "JoinPairs", @"args", parts);
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new();
         for (int i = 0; i < parts.Length; i++)
         {
             sb.Append(parts[i++] + firstDelimiter);
