@@ -1,19 +1,9 @@
 namespace SunamoLogging.Logger.LoggerBaseNS;
 
 
-public class SunamoLogger : LoggerBase
+public class SunamoLogger(Action<string, string[]> writeLineHandler) : LoggerBase(writeLineHandler)
 {
-    public static SunamoLogger Instance = new(WriteLineWorker);
-
-    private SunamoLogger()
-    {
-        // Here it must be without Instance =, otherwise write Instance again with writeLineHandler=null
-        //new SunamoLogger(WriteLine);
-    }
-
-    public SunamoLogger(Action<string, string[]> writeLineHandler) : base(writeLineHandler)
-    {
-    }
+    public static SunamoLogger Instance { get; set; } = new(WriteLineWorker);
 
     public static void WriteLineWorker(string text, params string[] args)
     {

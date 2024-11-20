@@ -42,9 +42,9 @@ public class InitApp
     //        ClipboardHelper.Instance = value;
     //    }
     //}
-    public static ILoggerBase Logger;
-    public static TypedLoggerBase TypedLogger;
-    public static TemplateLoggerBase TemplateLogger;
+    public static ILoggerBase? Logger { get; set; }
+    public static TypedLoggerBase? TypedLogger { get; set; }
+    public static TemplateLoggerBase? TemplateLogger { get; set; }
 
     #endregion
 }
