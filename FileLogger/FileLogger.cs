@@ -4,7 +4,7 @@ public class FileLogger(string path) : ILogger
     private static readonly object _lock = new();
     private readonly List<object> _scopeData = [];
 
-    public List<LogLevel> LevelsToLog { get; set; } = [LogLevel.Warning | LogLevel.Error | LogLevel.Critical];
+    public List<LogLevel> LevelsToLog { get; set; } = [LogLevel.Warning, LogLevel.Error, LogLevel.Critical];
 
     public bool IsEnabled(LogLevel logLevel)
     {
@@ -13,6 +13,11 @@ public class FileLogger(string path) : ILogger
 
     public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception, string> formatter)
     {
+        if (!IsEnabled(logLevel))
+        {
+            return;
+        }
+
         if (formatter != null)
         {
             lock (_lock)
@@ -22,13 +27,10 @@ public class FileLogger(string path) : ILogger
                 string exc = "";
                 if (exception != null)
                 {
-                    exc = n + exception.GetType() + ": " + exception.Message + n + exception.StackTrace + n;
-                    File.AppendAllText(fullFilePath, logLevel.ToString() + ": " + DateTime.Now.ToString() + " " + formatter(state, exception) + n + exc);
+                    exc = string.Join(n, [exception.GetType(), exception.Message, exception.StackTrace]);
+
                 }
-                else
-                {
-                    CL.WriteError($"{nameof(exception)} in {nameof(FileLogger)} was null and cannot be written to file.");
-                }
+                File.AppendAllText(fullFilePath, logLevel.ToString() + ": " + DateTime.Now.ToString() + " " + formatter(state, exception ?? new Exception()) + n + exc);
             }
         }
         else
