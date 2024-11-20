@@ -1,10 +1,5 @@
 namespace SunamoLogging;
 
-/// <summary>
-///     Nemůže být v SunamoThisApp kvůli:
-///     Cycle detected.
-///     SunamoThisApp -> SunamoLogger 23.12.22.1 -> SunamoI18N 23.12.21.1 -> SunamoThisApp(>= 23.12.20.2).
-/// </summary>
 public class InitApp
 {
     /// <summary>
@@ -22,7 +17,7 @@ public class InitApp
         TemplateLogger =
 #if DEBUG2 && DEBUG
             DebugTemplateLogger.Instance;
-#elif !DEBUG2 //&& DEBUG
+#elif !DEBUG2
             null;
 #endif
         TypedLogger =
