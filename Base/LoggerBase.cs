@@ -74,13 +74,13 @@ public abstract class LoggerBase : ILoggerBase
     public void WriteListOneRow(List<string> item, string swd)
     {
 #if DEBUG
-        _writeLineDelegate.Invoke(string.Join(swd, item), EmptyArrays.Strings);
+        _writeLineDelegate.Invoke(string.Join(swd, item), []);
 #endif
     }
 
     public void WriteArgs(params string[] args)
     {
-        _writeLineDelegate.Invoke(/*SHJoinPairs.JoinPairs(args)*/ string.Join(";", args), EmptyArrays.Strings);
+        _writeLineDelegate.Invoke(/*SHJoinPairs.JoinPairs(args)*/ string.Join(";", args), []);
     }
 
     public bool IsInRightFormat(string text, params string[] args)
@@ -154,7 +154,7 @@ public abstract class LoggerBase : ILoggerBase
 
     public void WriteNumberedList(string what, List<string> list, bool numbered)
     {
-        _writeLineDelegate.Invoke(what + ":", EmptyArrays.Strings);
+        _writeLineDelegate.Invoke(what + ":", []);
         for (int i = 0; i < list.Count; i++)
         {
             if (numbered)

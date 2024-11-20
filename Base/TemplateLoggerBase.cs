@@ -143,7 +143,7 @@ public abstract class TemplateLoggerBase(Action<TypeOfMessageLogging, string, st
 
     private void WriteLine(TypeOfMessageLogging error, string v)
     {
-        writeLineDelegate(error, v, EmptyArrays.Strings);
+        writeLineDelegate(error, v, []);
     }
 
 
