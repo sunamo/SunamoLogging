@@ -1,33 +1,9 @@
 namespace SunamoLogging.Base;
-public abstract class LoggerBase : ILoggerBase
+public abstract class LoggerBase(Action<string, string[]> writeLineDelegate) : ILoggerBase
 {
     // TODO: Make logger public class as base and replace all occurences With Instance
-    protected Action<string, string[]> _writeLineDelegate;
+    protected Action<string, string[]> _writeLineDelegate = writeLineDelegate;
     public bool IsActive = true;
-    private static Type type = typeof(LoggerBase);
-    private StringBuilder _sb = new();
-
-    protected LoggerBase()
-    {
-
-    }
-
-    //public void DumpObject(string name, object o, DumpProvider d, params string[] onlyNames)
-    //{
-    //    var dump = RH.DumpAsString(new DumpAsStringArgs { name = name, o = o, d = d, onlyNames = onlyNames.ToList() });//  , o, d, onlyNames);
-    //    WriteLine(dump);
-    //    WriteLine("");
-    //}
-
-    //public void DumpObjects(string name, IList o, DumpProvider d, params string[] onlyNames)
-    //{
-    //    int i = 0;
-    //    foreach (var item in o)
-    //    {
-    //        DumpObject(name + " #" + i, item, d, onlyNames);
-    //        i++;
-    //    }
-    //}
 
     /// <summary>
     /// Only for debug purposes
@@ -49,15 +25,9 @@ public abstract class LoggerBase : ILoggerBase
     /// </summary>
     /// <param name = "v1"></param>
     /// <param name = "name"></param>
-    /// <param name = "v2"></param>
     public void WriteLineFormat(string v1, params string[] name)
     {
         WriteLine(v1, name);
-    }
-
-    public LoggerBase(Action<string, string[]> writeLineDelegate)
-    {
-        _writeLineDelegate = writeLineDelegate;
     }
 
     public void WriteCount(string collectionName, IList list)
@@ -73,6 +43,8 @@ public abstract class LoggerBase : ILoggerBase
 
     public void WriteListOneRow(List<string> item, string swd)
     {
+
+
 #if DEBUG
         _writeLineDelegate.Invoke(string.Join(swd, item), []);
 #endif
@@ -124,7 +96,7 @@ public abstract class LoggerBase : ILoggerBase
     {
         if (what != null)
         {
-            WriteLine(what);
+            _writeLineDelegate.Invoke(what, []);
         }
     }
 
@@ -135,10 +107,7 @@ public abstract class LoggerBase : ILoggerBase
     /// <param name="text"></param>
     public void WriteLine(string what, object text)
     {
-        if (text == null)
-        {
-            text = "(null)";
-        }
+        text ??= "(null)";
 
 
 
