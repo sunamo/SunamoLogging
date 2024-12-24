@@ -4,17 +4,17 @@ public abstract class TemplateLoggerBase(Action<TypeOfMessageLogging, string, st
 {
     public void SavedToDrive(string v)
     {
-        WriteLine(TypeOfMessageLogging.Success, sess.i18n(XlfKeys.SavedToDrive) + ": " + v);
+        WriteLine(TypeOfMessageLogging.Success, Translate.FromKey(XlfKeys.SavedToDrive) + ": " + v);
     }
 
     public void TryAFewSecondsLaterAfterFullyInitialized()
     {
-        WriteLine(TypeOfMessageLogging.Information, sess.i18n(XlfKeys.TryAFewSecondsLaterAfterFullyInitialized));
+        WriteLine(TypeOfMessageLogging.Information, Translate.FromKey(XlfKeys.TryAFewSecondsLaterAfterFullyInitialized));
     }
 
     public void Finished(string nameOfOperation)
     {
-        WriteLine(TypeOfMessageLogging.Success, nameOfOperation + " - " + sess.i18n(XlfKeys.Finished));
+        WriteLine(TypeOfMessageLogging.Success, nameOfOperation + " - " + Translate.FromKey(XlfKeys.Finished));
     }
     public void EndRunTime()
     {
@@ -38,39 +38,39 @@ public abstract class TemplateLoggerBase(Action<TypeOfMessageLogging, string, st
     }
     public void SomeErrorsOccuredSeeLog()
     {
-        WriteLine(TypeOfMessageLogging.Error, sess.i18n(XlfKeys.SomeErrorsOccuredSeeLog));
+        WriteLine(TypeOfMessageLogging.Error, Translate.FromKey(XlfKeys.SomeErrorsOccuredSeeLog));
     }
     public void FolderDontExists(string folder)
     {
-        WriteLine(TypeOfMessageLogging.Error, sess.i18n(XlfKeys.Folder) + " " + folder + " doesn't exists.");
+        WriteLine(TypeOfMessageLogging.Error, Translate.FromKey(XlfKeys.Folder) + " " + folder + " doesn't exists.");
     }
     public void FileDontExists(string selectedFile)
     {
-        WriteLine(TypeOfMessageLogging.Error, sess.i18n(XlfKeys.File) + " " + selectedFile + " doesn't exists.");
+        WriteLine(TypeOfMessageLogging.Error, Translate.FromKey(XlfKeys.File) + " " + selectedFile + " doesn't exists.");
     }
 
     #endregion
     #region Information
     public void LoadedFromStorage(string item)
     {
-        WriteLine(TypeOfMessageLogging.Information, sess.i18n(XlfKeys.LoadedFromStorage) + ": " + item);
+        WriteLine(TypeOfMessageLogging.Information, Translate.FromKey(XlfKeys.LoadedFromStorage) + ": " + item);
     }
 
     public void InsertAsIndexesZeroBased()
     {
-        WriteLine(TypeOfMessageLogging.Information, sess.i18n(XlfKeys.InsertAsIndexesZeroBased));
+        WriteLine(TypeOfMessageLogging.Information, Translate.FromKey(XlfKeys.InsertAsIndexesZeroBased));
     }
     public void UnfortunatelyBadFormatPleaseTryAgain()
     {
-        WriteLine(TypeOfMessageLogging.Information, sess.i18n(XlfKeys.UnfortunatelyBadFormatPleaseTryAgain) + ".");
+        WriteLine(TypeOfMessageLogging.Information, Translate.FromKey(XlfKeys.UnfortunatelyBadFormatPleaseTryAgain) + ".");
     }
     public void OperationWasStopped()
     {
-        WriteLine(TypeOfMessageLogging.Information, sess.i18n(XlfKeys.OperationWasStopped));
+        WriteLine(TypeOfMessageLogging.Information, Translate.FromKey(XlfKeys.OperationWasStopped));
     }
     public void NoData()
     {
-        WriteLine(TypeOfMessageLogging.Information, sess.i18n(XlfKeys.PleaseEnterRightInputData));
+        WriteLine(TypeOfMessageLogging.Information, Translate.FromKey(XlfKeys.PleaseEnterRightInputData));
     }
     /// <summary>
     /// Zmena: metoda nezapisuje primo na konzoli, misto toho pouze vraci retezec
@@ -78,7 +78,7 @@ public abstract class TemplateLoggerBase(Action<TypeOfMessageLogging, string, st
     /// <param name="fn"></param>
     public void SuccessfullyResized(string fn)
     {
-        WriteLine(TypeOfMessageLogging.Information, sess.i18n(XlfKeys.SuccessfullyResizedTo) + " " + fn);
+        WriteLine(TypeOfMessageLogging.Information, Translate.FromKey(XlfKeys.SuccessfullyResizedTo) + " " + fn);
     }
 
 
