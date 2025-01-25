@@ -10,6 +10,11 @@ public class FileLoggerProvider(string _path) : ILoggerProvider
         return new FileLoggerProvider(filePath);
     }
 
+    /// <summary>
+    /// In D:\Logs
+    /// </summary>
+    /// <param name="appName"></param>
+    /// <returns></returns>
     public static FileLoggerProvider DefaultDirectory(string appName)
     {
         return CustomDirectory(@"D:\Logs", appName);
