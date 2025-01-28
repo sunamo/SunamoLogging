@@ -4,9 +4,6 @@ namespace SunamoLogging._sunamo.SunamoShared.Helpers.Runtime;
 
 internal class RuntimeHelper
 {
-    internal static void EmptyDummyMethod()
-    {
-    }
 
     internal static void EmptyDummyMethod(string s, params Object[] o)
     {
