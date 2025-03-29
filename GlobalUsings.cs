@@ -27,7 +27,6 @@ global using SunamoLogging.Services;
 global using SunamoLogging.Logger.TemplateLoggerBaseNS;
 global using SunamoLogging.Logger.TypedLoggerBaseNS;
 global using SunamoLogging._sunamo.SunamoStringJoinPairs;
-
 global using System.Dynamic;
 global using System.Text.Json;
 global using System.Threading.Tasks;
