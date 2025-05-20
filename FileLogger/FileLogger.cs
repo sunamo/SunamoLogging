@@ -1,10 +1,10 @@
 ﻿namespace SunamoLogging.FileLogger;
-public class FileLogger(string path) : ILogger
+public class FileLogger(string path, List<LogLevel> levelsToLog) : ILogger
 {
     private static readonly object _lock = new();
     private readonly List<object> _scopeData = [];
 
-    public List<LogLevel> LevelsToLog { get; set; } = [LogLevel.Warning, LogLevel.Error, LogLevel.Critical];
+    public List<LogLevel> LevelsToLog { get; set; } = levelsToLog;
 
     public bool IsEnabled(LogLevel logLevel)
     {

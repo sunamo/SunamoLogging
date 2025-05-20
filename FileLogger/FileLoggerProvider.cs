@@ -2,6 +2,8 @@
 
 public class FileLoggerProvider(string _path) : ILoggerProvider
 {
+    public List<LogLevel> LevelsToLog = [LogLevel.Critical, LogLevel.Error, LogLevel.Warning];
+
     public static FileLoggerProvider CustomDirectory(string directory, string appName)
     {
         var filePath = Path.Combine(directory, appName);
@@ -22,8 +24,10 @@ public class FileLoggerProvider(string _path) : ILoggerProvider
 
     public ILogger CreateLogger(string categoryName)
     {
-        return new FileLogger(_path);
+        return new FileLogger(_path, LevelsToLog);
     }
+
+
 
     public void Dispose()
     {
