@@ -39,7 +39,7 @@ public class DebugLogger(Action<string, string[]> writeLineHandler) : LoggerBase
 #if DEBUG //2
     public static void DebugWriteLine(TypeOfMessageLogging tz, string text, params Object[] args)
     {
-        //DebugLogger.DebugWriteLine(tz.ToString() + ":" + string.Format(text, args));
+        DebugLogger.DebugWriteLine(tz.ToString() + ":" + string.Format(text, args));
     }
 
     public static void DebugWriteLine(string text, params string[] args)

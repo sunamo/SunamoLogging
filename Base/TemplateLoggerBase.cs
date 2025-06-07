@@ -90,7 +90,7 @@ public abstract class TemplateLoggerBase(Action<TypeOfMessageLogging, string, st
     /// <param name="methodName"></param>
     /// <param name="nameOfCollection"></param>
     /// <param name="args"></param>
-    public bool AnyElementIsNullOrEmpty(Type type, string methodName, string nameOfCollection, List<string> args)
+    public bool AnyElementIsNullOrEmpty(string nameOfCollection, List<string> args)
     {
         List<int> nulled = CAIndexesWithNull.IndexesWithNullOrEmpty(args);
         if (nulled.Count > 0)
@@ -124,7 +124,7 @@ public abstract class TemplateLoggerBase(Action<TypeOfMessageLogging, string, st
     /// <param name="methodName"></param>
     /// <param name="nameOfCollection"></param>
     /// <param name="args"></param>
-    public bool NotEvenNumberOfElements(Type type, string methodName, string nameOfCollection, string[] args)
+    public bool NotEvenNumberOfElements(string nameOfCollection, string[] args)
     {
         if (args.Count() % 2 == 1)
         {
@@ -155,7 +155,7 @@ public abstract class TemplateLoggerBase(Action<TypeOfMessageLogging, string, st
     /// <param name="methodName"></param>
     /// <param name="nameOfCollection"></param>
     /// <param name="args"></param>
-    public bool AnyElementIsNull(Type type, string methodName, string nameOfCollection, string[] args)
+    public bool AnyElementIsNull(string nameOfCollection, string[] args)
     {
         List<int> nulled = CAIndexesWithNull.IndexesWithNull(args);
         if (nulled.Count > 0)
