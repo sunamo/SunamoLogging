@@ -1,5 +1,4 @@
 namespace RunnerLogging;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using SunamoCl;
@@ -25,10 +24,10 @@ internal class Program
 
     static void Main()
     {
-        MainAsync().GetAwaiter().GetResult();
+        MainAsync(args).GetAwaiter().GetResult();
     }
 
-    static async Task MainAsync()
+    static async Task MainAsync(string[] args)
     {
         var runned = await CmdBootStrap.RunWithRunArgs(new SunamoCl.SunamoCmd.Args.RunArgs { ServiceCollection = Services });
 
