@@ -1,3 +1,6 @@
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+
 namespace RunnerLogging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -31,8 +34,8 @@ internal class Program
     {
         var runned = await CmdBootStrap.RunWithRunArgs(new SunamoCl.SunamoCmd.Args.RunArgs { ServiceCollection = Services });
 
-        var l = Provider.GetService<LoggerOuter>();
-        l.Log();
+        var list = Provider.GetService<LoggerOuter>();
+        list.Log();
 
         #region Před zavedením CmdBootstrap
         var sc = new ServiceCollection();

@@ -1,4 +1,7 @@
-﻿namespace SunamoLogging.FileLogger;
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+
+namespace SunamoLogging.FileLogger;
 public class FileLogger(string path, List<LogLevel> levelsToLog) : ILogger
 {
     private static readonly object _lock = new();
@@ -23,14 +26,14 @@ public class FileLogger(string path, List<LogLevel> levelsToLog) : ILogger
             lock (_lock)
             {
                 string fullFilePath = Path.Combine(path, DateTime.Now.ToString("yyyy-MM-dd") + "_log.txt");
-                var n = Environment.NewLine;
+                var name = Environment.NewLine;
                 string exc = "";
                 if (exception != null)
                 {
-                    exc = string.Join(n, [exception.GetType(), exception.Message, exception.StackTrace]);
+                    exc = string.Join(name, [exception.GetType(), exception.Message, exception.StackTrace]);
 
                 }
-                File.AppendAllText(fullFilePath, logLevel.ToString() + ": " + DateTime.Now.ToString() + " " + formatter(state, exception ?? new Exception()) + n + exc);
+                File.AppendAllText(fullFilePath, logLevel.ToString() + ": " + DateTime.Now.ToString() + " " + formatter(state, exception ?? new Exception()) + name + exc);
             }
         }
         else

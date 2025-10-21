@@ -1,3 +1,5 @@
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 ﻿namespace SunamoLogging.FileLogger;
 
 public class FileLoggerProvider(string _path) : ILoggerProvider
