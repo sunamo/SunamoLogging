@@ -1,6 +1,7 @@
+namespace SunamoLogging.Base;
+
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
-namespace SunamoLogging.Base;
 public abstract class LoggerBase(Action<string, string[]> writeLineDelegate) : ILoggerBase
 {
     // TODO: Make logger public class as base and replace all occurences With Instance

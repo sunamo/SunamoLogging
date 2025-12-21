@@ -1,6 +1,7 @@
+namespace SunamoLogging._sunamo.SunamoThisApp;
+
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
-namespace SunamoLogging._sunamo.SunamoThisApp;
 internal class ThisApp
 {
     internal static event Action<TypeOfMessageLogging, string> StatusSetted;

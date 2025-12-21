@@ -1,6 +1,7 @@
+namespace SunamoLogging.Logger.TypedLoggerBaseNS;
+
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
-namespace SunamoLogging.Logger.TypedLoggerBaseNS;
 public class TypedDebugLogger : TypedLoggerBase
 {
 #if DEBUG //2
