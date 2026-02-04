@@ -1,11 +1,17 @@
 namespace SunamoLogging._sunamo.SunamoLang.SunamoI18N;
 
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+/// <summary>
+/// Translation helper class for localization keys.
+/// </summary>
 internal class Translate
 {
-    internal static string FromKey(string tryAFewSecondsLaterAfterFullyInitialized)
+    /// <summary>
+    /// Returns the translation for the specified key. Currently returns the key itself as a placeholder.
+    /// </summary>
+    /// <param name="key">The translation key.</param>
+    /// <returns>The translated text (currently the key itself).</returns>
+    internal static string FromKey(string key)
     {
-        return tryAFewSecondsLaterAfterFullyInitialized;
+        return key;
     }
 }

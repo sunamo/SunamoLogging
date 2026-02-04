@@ -1,39 +1,53 @@
 namespace SunamoLogging._sunamo.SunamoCollectionsIndexesWithNull;
 
+/// <summary>
+/// Collection analysis helper for finding indexes of null or empty elements.
+/// </summary>
 internal class CAIndexesWithNull
 {
-    internal static List<int> IndexesWithNull(IList times)
+    /// <summary>
+    /// Returns a list of indexes where elements are null in the specified collection.
+    /// </summary>
+    /// <param name="collection">The collection to analyze.</param>
+    /// <returns>List of indexes where elements are null.</returns>
+    internal static List<int> IndexesWithNull(IList collection)
     {
-        List<int> nulled = [];
-        int i = 0;
-        foreach (var item in times)
+        List<int> nullIndexes = [];
+        int index = 0;
+        foreach (var item in collection)
         {
             if (item == null)
             {
-                nulled.Add(i);
+                nullIndexes.Add(index);
             }
-            i++;
+            index++;
         }
 
-        return nulled;
+        return nullIndexes;
     }
-    internal static List<int> IndexesWithNullOrEmpty(IList times)
+
+    /// <summary>
+    /// Returns a list of indexes where elements are null or empty in the specified collection.
+    /// </summary>
+    /// <param name="collection">The collection to analyze.</param>
+    /// <returns>List of indexes where elements are null or empty.</returns>
+    internal static List<int> IndexesWithNullOrEmpty(IList collection)
     {
-        List<int> nulled = [];
-        int i = 0;
-        foreach (var item in times)
+        List<int> nullOrEmptyIndexes = [];
+        int index = 0;
+        foreach (var item in collection)
         {
             if (item == null)
             {
-                nulled.Add(i);
+                nullOrEmptyIndexes.Add(index);
             }
             else if (item.ToString() == string.Empty)
             {
-                nulled.Add(i);
+                nullOrEmptyIndexes.Add(index);
             }
-            i++;
+            index++;
         }
 
-        return nulled;
+        return nullOrEmptyIndexes;
     }
 }

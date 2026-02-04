@@ -1,63 +1,94 @@
 namespace SunamoLogging.Base;
 
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+/// <summary>
+/// Base logger class implementing common logging operations.
+/// </summary>
 public abstract class LoggerBase(Action<string, string[]> writeLineDelegate) : ILoggerBase
 {
-    // TODO: Make logger public class as base and replace all occurences With Instance
+    /// <summary>
+    /// The delegate used to write log lines.
+    /// </summary>
     protected Action<string, string[]> _writeLineDelegate = writeLineDelegate;
+
+    /// <summary>
+    /// Gets or sets whether the logger is active and should write output.
+    /// </summary>
     public bool IsActive = true;
 
     /// <summary>
-    /// Only for debug purposes
+    /// Writes output to clipboard in release mode or debug output in debug mode.
+    /// Only for debug purposes.
     /// </summary>
-    /// <param name = "v"></param>
-    /// <param name = "args"></param>
-    public void ClipboardOrDebug(string v, params string[] args)
+    /// <param name="text">The text to write.</param>
+    /// <param name="args">Format arguments.</param>
+    public void ClipboardOrDebug(string text, params string[] args)
     {
 #if DEBUG
-        //DebugLogger.DebugWriteLine(TypeOfMessage.Appeal, v, args);
+
 #else
-//sb.AppendLine(TypeOfMessage.Appeal + ": " + string.Format(v, args));
-//ClipboardHelper.SetText(sb.ToString());
+
 #endif
     }
 
     /// <summary>
-    /// Only due to Old sfw apps
+    /// Writes a formatted line. Legacy compatibility method for old applications.
     /// </summary>
-    /// <param name = "v1"></param>
-    /// <param name = "name"></param>
-    public void WriteLineFormat(string v1, params string[] name)
+    /// <param name="format">The format string.</param>
+    /// <param name="args">Format arguments.</param>
+    public void WriteLineFormat(string format, params string[] args)
     {
-        WriteLine(v1, name);
+        WriteLine(format, args);
     }
 
+    /// <summary>
+    /// Writes the count of elements in a collection.
+    /// </summary>
+    /// <param name="collectionName">The name of the collection.</param>
+    /// <param name="list">The collection to count.</param>
     public void WriteCount(string collectionName, IList list)
     {
         WriteLine(collectionName + " count: " + list.Count);
     }
 
+    /// <summary>
+    /// Writes a labeled list with all elements on separate lines.
+    /// </summary>
+    /// <param name="collectionName">The name/label of the collection.</param>
+    /// <param name="list">The list to write.</param>
     public void WriteList(string collectionName, List<string> list)
     {
         WriteLine(collectionName + " elements:");
         WriteList(list);
     }
 
-    public void WriteListOneRow(List<string> item, string swd)
+    /// <summary>
+    /// Writes all list elements in a single row separated by a delimiter.
+    /// Only outputs in DEBUG builds.
+    /// </summary>
+    /// <param name="list">The list to write.</param>
+    /// <param name="separator">The separator between elements.</param>
+    public void WriteListOneRow(List<string> list, string separator)
     {
-
-
 #if DEBUG
-        _writeLineDelegate.Invoke(string.Join(swd, item), []);
+        _writeLineDelegate.Invoke(string.Join(separator, list), []);
 #endif
     }
 
+    /// <summary>
+    /// Writes arguments separated by semicolons.
+    /// </summary>
+    /// <param name="args">The arguments to write.</param>
     public void WriteArgs(params string[] args)
     {
-        _writeLineDelegate.Invoke(/*SHJoinPairs.JoinPairs(args)*/ string.Join(";", args), []);
+        _writeLineDelegate.Invoke(string.Join(";", args), []);
     }
 
+    /// <summary>
+    /// Checks if the text is in the right format with the provided arguments.
+    /// </summary>
+    /// <param name="text">The format string to validate.</param>
+    /// <param name="args">Format arguments.</param>
+    /// <returns>True if the format is valid, false otherwise.</returns>
     public bool IsInRightFormat(string text, params string[] args)
     {
         try
@@ -73,8 +104,11 @@ public abstract class LoggerBase(Action<string, string[]> writeLineDelegate) : I
         return true;
     }
 
-
-
+    /// <summary>
+    /// Writes a formatted line if the logger is active.
+    /// </summary>
+    /// <param name="text">The format string.</param>
+    /// <param name="args">Format arguments.</param>
     public void WriteLine(string text, params string[] args)
     {
         if (IsActive)
@@ -83,6 +117,11 @@ public abstract class LoggerBase(Action<string, string[]> writeLineDelegate) : I
         }
     }
 
+    /// <summary>
+    /// Writes a line, converting null values to "(null)" string.
+    /// </summary>
+    /// <param name="text">The text to write.</param>
+    /// <param name="args">Format arguments.</param>
     public void WriteLineNull(string text, params string[] args)
     {
         if (IsActive)
@@ -92,44 +131,48 @@ public abstract class LoggerBase(Action<string, string[]> writeLineDelegate) : I
     }
 
     /// <summary>
-    /// for compatibility with CL.WriteLine
+    /// Writes a simple line without formatting.
+    /// For compatibility with CL.WriteLine.
     /// </summary>
-    /// <param name = "what"></param>
-    public void WriteLine(string what)
+    /// <param name="text">The text to write.</param>
+    public void WriteLine(string text)
     {
-        if (what != null)
+        if (text != null)
         {
-            _writeLineDelegate.Invoke(what, []);
+            _writeLineDelegate.Invoke(text, []);
         }
     }
 
     /// <summary>
-    /// Will auto append ": "
+    /// Writes a labeled line with automatic ": " separator.
     /// </summary>
-    /// <param name="what"></param>
-    /// <param name="text"></param>
-    public void WriteLine(string what, object text)
+    /// <param name="label">The label/prefix.</param>
+    /// <param name="value">The value to write.</param>
+    public void WriteLine(string label, object value)
     {
-        text ??= "(null)";
+        value ??= "(null)";
 
-
-
-        string append = string.Empty;
-        if (!string.IsNullOrEmpty(what))
+        string prefix = string.Empty;
+        if (!string.IsNullOrEmpty(label))
         {
-            append = what + ": ";
+            prefix = label + ": ";
         }
 
-        WriteLine(append + text.ToString());
-
+        WriteLine(prefix + value.ToString());
     }
 
-    public void WriteNumberedList(string what, List<string> list, bool numbered)
+    /// <summary>
+    /// Writes a numbered or unnumbered list.
+    /// </summary>
+    /// <param name="label">The label/header for the list.</param>
+    /// <param name="list">The list to write.</param>
+    /// <param name="isNumbered">Whether to number the list items.</param>
+    public void WriteNumberedList(string label, List<string> list, bool isNumbered)
     {
-        _writeLineDelegate.Invoke(what + ":", []);
+        _writeLineDelegate.Invoke(label + ":", []);
         for (int i = 0; i < list.Count; i++)
         {
-            if (numbered)
+            if (isNumbered)
             {
                 WriteLine((i + 1).ToString(), list[i]);
             }
@@ -140,13 +183,22 @@ public abstract class LoggerBase(Action<string, string[]> writeLineDelegate) : I
         }
     }
 
+    /// <summary>
+    /// Writes all elements of a list, each on a separate line.
+    /// </summary>
+    /// <param name="list">The list to write.</param>
     public void WriteList(List<string> list)
     {
-        list.ForEach(d => WriteLine(d));
+        list.ForEach(element => WriteLine(element));
     }
 
-    public void TwoState(bool ret, params string[] toAppend)
+    /// <summary>
+    /// Writes a two-state (boolean) value with additional data.
+    /// </summary>
+    /// <param name="state">The state value.</param>
+    /// <param name="additionalData">Additional data to append.</param>
+    public void TwoState(bool state, params string[] additionalData)
     {
-        WriteLine(ret.ToString() + "," + string.Join(',', toAppend));
+        WriteLine(state.ToString() + "," + string.Join(',', additionalData));
     }
 }

@@ -1,35 +1,43 @@
 namespace SunamoLogging._sunamo;
 
-//namespace SunamoLogging._sunamo.SunamoExceptions._AddedToAllCsproj;
+/// <summary>
+/// File system helper class for directory operations.
+/// </summary>
 internal class FS
 {
-    internal static void CreateFoldersPsysicallyUnlessThere(string nad)
+    /// <summary>
+    /// Creates all directories in the specified path if they don't exist.
+    /// </summary>
+    /// <param name="folderPath">The full path of the directory to create.</param>
+    internal static void CreateFoldersPsysicallyUnlessThere(string folderPath)
     {
-        ThrowEx.IsNullOrEmpty("nad", nad);
-        //ThrowEx.IsNotWindowsPathFormat("nad", nad);
-        if (Directory.Exists(nad))
+        ThrowEx.IsNullOrEmpty("folderPath", folderPath);
+
+        if (Directory.Exists(folderPath))
         {
             return;
         }
-        List<string> slozkyKVytvoreni =
+
+        List<string> foldersToCreate =
         [
-nad
-];
+            folderPath
+        ];
+
+        string? currentPath = folderPath;
         while (true)
         {
-            nad = Path.GetDirectoryName(nad);
-            
-            if (Directory.Exists(nad))
+            currentPath = Path.GetDirectoryName(currentPath);
+
+            if (currentPath == null || Directory.Exists(currentPath))
             {
                 break;
             }
-            string kopia = nad;
-            slozkyKVytvoreni.Add(kopia);
+            foldersToCreate.Add(currentPath);
         }
-        slozkyKVytvoreni.Reverse();
-        foreach (string item in slozkyKVytvoreni)
+
+        foldersToCreate.Reverse();
+        foreach (string folder in foldersToCreate)
         {
-            string folder = item;
             if (!Directory.Exists(folder))
             {
                 Directory.CreateDirectory(folder);

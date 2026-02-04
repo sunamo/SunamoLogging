@@ -1,17 +1,25 @@
 namespace SunamoLogging.Logger.TemplateLoggerBaseNS;
 
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+/// <summary>
+/// Debug implementation of template logger that writes to console.
+/// </summary>
 public class DebugTemplateLogger : TemplateLoggerBase
 {
+    /// <summary>
+    /// The type of this logger.
+    /// </summary>
     public static Type type = typeof(DebugTemplateLogger);
-    static DebugTemplateLogger instance =
+
+    static DebugTemplateLogger? instance =
 #if DEBUG2
     new DebugTemplateLogger();
 #elif !DEBUG2
-    //new DebugLogger(DebugWriteLine);
     null;
 #endif
+
+    /// <summary>
+    /// Gets the singleton instance of the debug template logger.
+    /// </summary>
     public static TemplateLoggerBase Instance
     {
         get
@@ -19,23 +27,24 @@ public class DebugTemplateLogger : TemplateLoggerBase
             if (instance == null)
             {
                 throw new Exception("Dont use DebugLogger without #if DEBUG!!");
-                return DummyTemplateLogger.Instance;
             }
             return instance;
         }
     }
+
     private DebugTemplateLogger() : base(DebugWriteLine)
     {
     }
+
     /// <summary>
-    /// Nemůžu použít DebugLogger.DebugWriteLine - do release balíčku ho nedostanu přes #if DEBUG
+    /// Writes a debug message to console.
+    /// Cannot use DebugLogger.DebugWriteLine as it won't be available in release builds due to #if DEBUG.
     /// </summary>
-    /// <param name="t"></param>
-    /// <param name="m"></param>
-    /// <param name="args"></param>
-    static void DebugWriteLine(TypeOfMessageLogging t, string m, params string[] args)
+    /// <param name="messageType">The type of the message.</param>
+    /// <param name="message">The message format string.</param>
+    /// <param name="args">Format arguments.</param>
+    static void DebugWriteLine(TypeOfMessageLogging messageType, string message, params string[] args)
     {
-        // todo vykreslit barevně
-        Console.WriteLine(string.Format(m, args));
+        Console.WriteLine(string.Format(message, args));
     }
 }

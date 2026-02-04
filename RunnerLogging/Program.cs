@@ -35,7 +35,7 @@ internal class Program
         var runned = await CmdBootStrap.RunWithRunArgs(new SunamoCl.SunamoCmd.Args.RunArgs { ServiceCollection = Services });
 
         var list = Provider.GetService<LoggerOuter>();
-        list.Log();
+        list?.Log();
 
         #region Před zavedením CmdBootstrap
         var sc = new ServiceCollection();

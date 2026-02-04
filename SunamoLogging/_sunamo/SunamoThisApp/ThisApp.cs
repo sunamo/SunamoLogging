@@ -1,29 +1,40 @@
 namespace SunamoLogging._sunamo.SunamoThisApp;
 
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+/// <summary>
+/// Application status management class.
+/// </summary>
 internal class ThisApp
 {
-    internal static event Action<TypeOfMessageLogging, string> StatusSetted;
+    /// <summary>
+    /// Event raised when application status is set.
+    /// </summary>
+    internal static event Action<TypeOfMessageLogging, string>? StatusSetted;
 
-    internal static void SetStatus(TypeOfMessageLogging st, string status, params string[] args)
+    /// <summary>
+    /// Sets the application status with the specified message type and formatted message.
+    /// </summary>
+    /// <param name="messageType">The type of the message.</param>
+    /// <param name="message">The message format string.</param>
+    /// <param name="args">The format arguments.</param>
+    internal static void SetStatus(TypeOfMessageLogging messageType, string message, params string[] args)
     {
-        var format = /*string.Format*/ string.Format(status, args);
-        if (format.Trim() != string.Empty)
+        var formattedMessage = string.Format(message, args);
+        if (formattedMessage.Trim() != string.Empty)
         {
-            if (StatusSetted == null)
+            if (StatusSetted != null)
             {
-                // For unit tests
-                //////////DebugLogger.Instance.WriteLine(st + ": " + format);
-            }
-            else
-            {
-                StatusSetted(st, format);
+                StatusSetted(messageType, formattedMessage);
             }
         }
     }
-    internal static void Ordinal(string v, params string[] o)
+
+    /// <summary>
+    /// Sets an ordinary/normal status message.
+    /// </summary>
+    /// <param name="message">The message format string.</param>
+    /// <param name="args">The format arguments.</param>
+    internal static void Ordinal(string message, params string[] args)
     {
-        SetStatus(TypeOfMessageLogging.Ordinal, v, o);
+        SetStatus(TypeOfMessageLogging.Ordinal, message, args);
     }
 }
