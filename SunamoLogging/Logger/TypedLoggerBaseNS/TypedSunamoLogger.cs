@@ -8,7 +8,7 @@ public class TypedSunamoLogger : TypedLoggerBase
     /// <summary>
     /// Gets the singleton instance of the typed Sunamo logger.
     /// </summary>
-    public static TypedSunamoLogger Instance = new();
+    public static TypedSunamoLogger Instance { get; set; } = new();
 
     private TypedSunamoLogger() : base(WriteLineWorker)
     {

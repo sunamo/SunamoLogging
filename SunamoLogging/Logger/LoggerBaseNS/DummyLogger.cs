@@ -9,7 +9,7 @@ public class DummyLogger : LoggerBase
     /// <summary>
     /// Gets the singleton instance of the dummy logger.
     /// </summary>
-    public static DummyLogger Instance = new();
+    public static DummyLogger Instance { get; set; } = new();
 
     private DummyLogger() : base(RuntimeHelper.EmptyDummyMethod)
     {

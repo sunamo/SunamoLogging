@@ -8,12 +8,12 @@ public abstract class LoggerBase(Action<string, string[]> writeLineDelegate) : I
     /// <summary>
     /// The delegate used to write log lines.
     /// </summary>
-    protected Action<string, string[]> _writeLineDelegate = writeLineDelegate;
+    protected Action<string, string[]> writeLineDelegate = writeLineDelegate;
 
     /// <summary>
     /// Gets or sets whether the logger is active and should write output.
     /// </summary>
-    public bool IsActive = true;
+    public bool IsActive { get; set; } = true;
 
     /// <summary>
     /// Writes output to clipboard in release mode or debug output in debug mode.
@@ -70,7 +70,7 @@ public abstract class LoggerBase(Action<string, string[]> writeLineDelegate) : I
     public void WriteListOneRow(List<string> list, string separator)
     {
 #if DEBUG
-        _writeLineDelegate.Invoke(string.Join(separator, list), []);
+        writeLineDelegate.Invoke(string.Join(separator, list), []);
 #endif
     }
 
@@ -80,7 +80,7 @@ public abstract class LoggerBase(Action<string, string[]> writeLineDelegate) : I
     /// <param name="args">The arguments to write.</param>
     public void WriteArgs(params string[] args)
     {
-        _writeLineDelegate.Invoke(string.Join(";", args), []);
+        writeLineDelegate.Invoke(string.Join(";", args), []);
     }
 
     /// <summary>
@@ -93,7 +93,7 @@ public abstract class LoggerBase(Action<string, string[]> writeLineDelegate) : I
     {
         try
         {
-            _writeLineDelegate.Invoke(text, args);
+            writeLineDelegate.Invoke(text, args);
         }
         catch (Exception ex)
         {
@@ -113,7 +113,7 @@ public abstract class LoggerBase(Action<string, string[]> writeLineDelegate) : I
     {
         if (IsActive)
         {
-            _writeLineDelegate.Invoke(text, args);
+            writeLineDelegate.Invoke(text, args);
         }
     }
 
@@ -126,7 +126,7 @@ public abstract class LoggerBase(Action<string, string[]> writeLineDelegate) : I
     {
         if (IsActive)
         {
-            _writeLineDelegate.Invoke(SH.NullToStringOrDefault(text), args);
+            writeLineDelegate.Invoke(SH.NullToStringOrDefault(text), args);
         }
     }
 
@@ -139,7 +139,7 @@ public abstract class LoggerBase(Action<string, string[]> writeLineDelegate) : I
     {
         if (text != null)
         {
-            _writeLineDelegate.Invoke(text, []);
+            writeLineDelegate.Invoke(text, []);
         }
     }
 
@@ -169,7 +169,7 @@ public abstract class LoggerBase(Action<string, string[]> writeLineDelegate) : I
     /// <param name="isNumbered">Whether to number the list items.</param>
     public void WriteNumberedList(string label, List<string> list, bool isNumbered)
     {
-        _writeLineDelegate.Invoke(label + ":", []);
+        writeLineDelegate.Invoke(label + ":", []);
         for (int i = 0; i < list.Count; i++)
         {
             if (isNumbered)

@@ -5,8 +5,8 @@ namespace SunamoLogging.FileLogger;
 /// </summary>
 public class FileLogger(string path, List<LogLevel> levelsToLog) : ILogger
 {
-    private static readonly object _lock = new();
-    private readonly List<object> _scopeData = [];
+    private static readonly object lockObject = new();
+    private readonly List<object> scopeData = [];
 
     /// <summary>
     /// Gets or sets the log levels that should be logged.
@@ -41,7 +41,7 @@ public class FileLogger(string path, List<LogLevel> levelsToLog) : ILogger
 
         if (formatter != null)
         {
-            lock (_lock)
+            lock (lockObject)
             {
                 string fullFilePath = Path.Combine(path, DateTime.Now.ToString("yyyy-MM-dd") + "_log.txt");
                 var newLine = Environment.NewLine;
@@ -55,7 +55,7 @@ public class FileLogger(string path, List<LogLevel> levelsToLog) : ILogger
         }
         else
         {
-            CL.WriteError($"{nameof(exception)} in {nameof(FileLogger)} was null");
+            CL.WriteError($"{nameof(formatter)} in {nameof(FileLogger)} was null");
         }
     }
 
@@ -67,7 +67,7 @@ public class FileLogger(string path, List<LogLevel> levelsToLog) : ILogger
     /// <returns>A disposable object that ends the logical operation scope on dispose.</returns>
     public IDisposable? BeginScope<TState>(TState state) where TState : notnull
     {
-        _scopeData.Add(state);
+        scopeData.Add(state);
         return new ScopeDisposable(this, state);
     }
 }

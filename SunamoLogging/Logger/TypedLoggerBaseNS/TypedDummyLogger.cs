@@ -9,7 +9,7 @@ public class TypedDummyLogger : TypedLoggerBase
     /// <summary>
     /// Gets the singleton instance of the typed dummy logger.
     /// </summary>
-    public static TypedDummyLogger Instance = new();
+    public static TypedDummyLogger Instance { get; set; } = new();
 
     private TypedDummyLogger() : base(RuntimeHelper.EmptyDummyMethodLogMessage)
     {

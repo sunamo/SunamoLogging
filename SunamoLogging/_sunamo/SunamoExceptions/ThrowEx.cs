@@ -65,11 +65,11 @@ internal partial class ThrowEx
     /// <summary>
     /// Constructs the full name of executed code from type and method name.
     /// </summary>
-    /// <param name="type">The type (can be Type, MethodBase, string, or any object).</param>
+    /// <param name="typeOrObject">The type source (can be Type, MethodBase, string, or any object).</param>
     /// <param name="methodName">The method name (can be null).</param>
     /// <param name="isFromThrowEx">Whether this is called from ThrowEx (adjusts stack depth).</param>
     /// <returns>Full name in format "Namespace.Type.Method".</returns>
-    static string FullNameOfExecutedCode(object type, string methodName, bool isFromThrowEx = false)
+    static string FullNameOfExecutedCode(object typeOrObject, string methodName, bool isFromThrowEx = false)
     {
         if (methodName == null)
         {
@@ -83,22 +83,22 @@ internal partial class ThrowEx
         }
 
         string typeFullName;
-        if (type is Type asType)
+        if (typeOrObject is Type asType)
         {
-            typeFullName = asType.FullName ?? "Type cannot be get via type is Type type2";
+            typeFullName = asType.FullName ?? "Type cannot be get via type is Type";
         }
-        else if (type is MethodBase method)
+        else if (typeOrObject is MethodBase methodBase)
         {
-            typeFullName = method.ReflectedType?.FullName ?? "Type cannot be get via type is MethodBase method";
-            methodName = method.Name;
+            typeFullName = methodBase.ReflectedType?.FullName ?? "Type cannot be get via type is MethodBase";
+            methodName = methodBase.Name;
         }
-        else if (type is string)
+        else if (typeOrObject is string)
         {
-            typeFullName = type.ToString() ?? "Type cannot be get via type is string";
+            typeFullName = typeOrObject.ToString() ?? "Type cannot be get via type is string";
         }
         else
         {
-            Type actualType = type.GetType();
+            Type actualType = typeOrObject.GetType();
             typeFullName = actualType.FullName ?? "Type cannot be get via type.GetType()";
         }
         return string.Concat(typeFullName, ".", methodName);

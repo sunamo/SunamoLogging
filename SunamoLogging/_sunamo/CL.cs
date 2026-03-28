@@ -8,11 +8,11 @@ internal class CL
     /// <summary>
     /// Writes an error message to the console in red color.
     /// </summary>
-    /// <param name="error">The error message to write.</param>
-    internal static void WriteError(string error)
+    /// <param name="errorMessage">The error message to write.</param>
+    internal static void WriteError(string errorMessage)
     {
         Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine(error);
+        Console.WriteLine(errorMessage);
         Console.ResetColor();
     }
 }

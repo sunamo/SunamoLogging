@@ -8,7 +8,7 @@ public class SunamoTemplateLogger : TemplateLoggerBase
     /// <summary>
     /// Gets the singleton instance of the Sunamo template logger.
     /// </summary>
-    public static SunamoTemplateLogger Instance = new();
+    public static SunamoTemplateLogger Instance { get; set; } = new();
 
     private SunamoTemplateLogger() : base(ThisApp.SetStatus)
     {

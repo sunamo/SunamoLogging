@@ -190,8 +190,6 @@ public abstract class TemplateLoggerBase(Action<TypeOfMessageLogging, string, st
         WriteLine(TypeOfMessageLogging.Appeal, controlName + " must have value");
     }
 
-    static Type type = typeof(TemplateLoggerBase);
-
     /// <summary>
     /// Checks if the collection has an even number of elements.
     /// </summary>

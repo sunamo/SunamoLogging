@@ -5,12 +5,7 @@ namespace SunamoLogging.Logger.TemplateLoggerBaseNS;
 /// </summary>
 public class DebugTemplateLogger : TemplateLoggerBase
 {
-    /// <summary>
-    /// The type of this logger.
-    /// </summary>
-    public static Type type = typeof(DebugTemplateLogger);
-
-    static DebugTemplateLogger? instance =
+    static DebugTemplateLogger? loggerInstance =
 #if DEBUG2
     new DebugTemplateLogger();
 #elif !DEBUG2
@@ -24,11 +19,11 @@ public class DebugTemplateLogger : TemplateLoggerBase
     {
         get
         {
-            if (instance == null)
+            if (loggerInstance == null)
             {
                 throw new Exception("Dont use DebugLogger without #if DEBUG!!");
             }
-            return instance;
+            return loggerInstance;
         }
     }
 

@@ -2,17 +2,30 @@ namespace SunamoLogging.LogRouter;
 
 using System.Text.Json;
 
+/// <summary>
+/// Base class for managing log category settings with persistence to a JSON file.
+/// </summary>
+/// <typeparam name="TCategory">The enum type representing log categories.</typeparam>
 public class LogCategorySettingsBase<TCategory>
     where TCategory : struct, Enum
 {
-    private readonly string _settingsFilePath;
-    protected readonly (TCategory Category, string Description)[] _allCategories;
-    private Dictionary<string, bool> _enabled = [];
+    private readonly string settingsFilePath;
 
+    /// <summary>
+    /// All available log categories with their descriptions.
+    /// </summary>
+    protected readonly (TCategory Category, string Description)[] allCategories;
+    private Dictionary<string, bool> enabled = [];
+
+    /// <summary>
+    /// Initializes a new instance of the LogCategorySettingsBase class.
+    /// </summary>
+    /// <param name="settingsFilePath">The file path for persisting settings.</param>
+    /// <param name="allCategories">Array of all available categories with descriptions.</param>
     public LogCategorySettingsBase(string settingsFilePath, (TCategory Category, string Description)[] allCategories)
     {
-        _settingsFilePath = settingsFilePath;
-        _allCategories = allCategories;
+        this.settingsFilePath = settingsFilePath;
+        this.allCategories = allCategories;
         Load();
     }
 
@@ -20,34 +33,37 @@ public class LogCategorySettingsBase<TCategory>
     {
         try
         {
-            if (File.Exists(_settingsFilePath))
+            if (File.Exists(settingsFilePath))
             {
-                var json = File.ReadAllText(_settingsFilePath, System.Text.Encoding.UTF8);
+                var json = File.ReadAllText(settingsFilePath, System.Text.Encoding.UTF8);
                 var loaded = JsonSerializer.Deserialize<Dictionary<string, bool>>(json);
-                _enabled = loaded ?? [];
+                enabled = loaded ?? [];
             }
             else
             {
-                _enabled = [];
+                enabled = [];
             }
         }
         catch (Exception ex)
         {
             Console.WriteLine($"[LogCategorySettings] Failed to load settings: {ex.Message}. Using defaults (all disabled).");
-            _enabled = [];
+            enabled = [];
         }
     }
 
+    /// <summary>
+    /// Saves the current category settings to the settings file.
+    /// </summary>
     public void Save()
     {
         try
         {
-            var dir = Path.GetDirectoryName(_settingsFilePath);
-            if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
-                Directory.CreateDirectory(dir);
+            var directory = Path.GetDirectoryName(settingsFilePath);
+            if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
 
-            var json = JsonSerializer.Serialize(_enabled, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(_settingsFilePath, json, System.Text.Encoding.UTF8);
+            var json = JsonSerializer.Serialize(enabled, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(settingsFilePath, json, System.Text.Encoding.UTF8);
         }
         catch (Exception ex)
         {
@@ -55,83 +71,98 @@ public class LogCategorySettingsBase<TCategory>
         }
     }
 
-    public bool IsEnabled(TCategory cat) =>
-        _enabled.TryGetValue(cat.ToString(), out var val) && val;
+    /// <summary>
+    /// Determines whether the specified category is enabled.
+    /// </summary>
+    /// <param name="category">The category to check.</param>
+    /// <returns>True if the category is enabled, false otherwise.</returns>
+    public bool IsEnabled(TCategory category) =>
+        enabled.TryGetValue(category.ToString(), out var isEnabled) && isEnabled;
 
-    public void Toggle(TCategory cat)
+    /// <summary>
+    /// Toggles the enabled state of the specified category.
+    /// </summary>
+    /// <param name="category">The category to toggle.</param>
+    public void Toggle(TCategory category)
     {
-        var key = cat.ToString();
-        _enabled[key] = !(_enabled.TryGetValue(key, out var val) && val);
+        var categoryKey = category.ToString();
+        enabled[categoryKey] = !(enabled.TryGetValue(categoryKey, out var isEnabled) && isEnabled);
     }
 
+    /// <summary>
+    /// Prints a startup banner showing which categories are enabled and disabled.
+    /// </summary>
     public void PrintStartupBanner()
     {
-        var enabledNames = _allCategories
-            .Where(c => IsEnabled(c.Category))
-            .Select(c => c.Category.ToString())
+        var enabledNames = allCategories
+            .Where(categoryEntry => IsEnabled(categoryEntry.Category))
+            .Select(categoryEntry => categoryEntry.Category.ToString())
             .ToList();
-        var disabledNames = _allCategories
-            .Where(c => !IsEnabled(c.Category))
-            .Select(c => c.Category.ToString())
+        var disabledNames = allCategories
+            .Where(categoryEntry => !IsEnabled(categoryEntry.Category))
+            .Select(categoryEntry => categoryEntry.Category.ToString())
             .ToList();
 
-        Console.WriteLine("--- Logování kategorií ---");
-        Console.WriteLine($"Zapnuté:  {(enabledNames.Count > 0 ? string.Join(", ", enabledNames) : "(žádné)")}");
-        Console.WriteLine($"Vypnuté:  {(disabledNames.Count > 0 ? string.Join(", ", disabledNames) : "(žádné)")}");
-        Console.WriteLine("--------------------------");
+        Console.WriteLine("--- Log Categories ---");
+        Console.WriteLine($"Enabled:  {(enabledNames.Count > 0 ? string.Join(", ", enabledNames) : "(none)")}");
+        Console.WriteLine($"Disabled: {(disabledNames.Count > 0 ? string.Join(", ", disabledNames) : "(none)")}");
+        Console.WriteLine("----------------------");
     }
 
+    /// <summary>
+    /// Opens an interactive console UI for toggling log categories.
+    /// </summary>
     public void OpenConsoleUI()
     {
-        var snapshot = _allCategories
-            .ToDictionary(c => c.Category, c => IsEnabled(c.Category));
+        var snapshot = allCategories
+            .ToDictionary(categoryEntry => categoryEntry.Category, categoryEntry => IsEnabled(categoryEntry.Category));
 
         int selectedIndex = 0;
 
         while (true)
         {
             Console.Clear();
-            Console.WriteLine("=== NASTAVENÍ LOGOVÁNÍ ===");
-            Console.WriteLine("[↑↓] Navigace   [Mezerník] Přepnout   [Enter] Uložit   [Esc] Zrušit");
+            Console.WriteLine("=== LOGGING SETTINGS ===");
+            Console.WriteLine("[Up/Down] Navigate   [Space] Toggle   [Enter] Save   [Esc] Cancel");
             Console.WriteLine();
 
-            for (int i = 0; i < _allCategories.Length; i++)
+            for (int i = 0; i < allCategories.Length; i++)
             {
-                var (cat, desc) = _allCategories[i];
-                var check = snapshot[cat] ? "x" : " ";
-                var prefix = i == selectedIndex ? "> " : "  ";
-                Console.WriteLine($"{prefix}[{check}] {cat,-22} - {desc}");
+                var (category, description) = allCategories[i];
+                var checkMark = snapshot[category] ? "x" : " ";
+                var linePrefix = i == selectedIndex ? "> " : "  ";
+                Console.WriteLine($"{linePrefix}[{checkMark}] {category,-22} - {description}");
             }
 
-            var key = Console.ReadKey(intercept: true);
+            var pressedKey = Console.ReadKey(intercept: true);
 
-            if (key.Key == ConsoleKey.UpArrow)
+            if (pressedKey.Key == ConsoleKey.UpArrow)
             {
                 if (selectedIndex > 0) selectedIndex--;
             }
-            else if (key.Key == ConsoleKey.DownArrow)
+            else if (pressedKey.Key == ConsoleKey.DownArrow)
             {
-                if (selectedIndex < _allCategories.Length - 1) selectedIndex++;
+                if (selectedIndex < allCategories.Length - 1) selectedIndex++;
             }
-            else if (key.Key == ConsoleKey.Spacebar)
+            else if (pressedKey.Key == ConsoleKey.Spacebar)
             {
-                var cat = _allCategories[selectedIndex].Category;
-                snapshot[cat] = !snapshot[cat];
+                var category = allCategories[selectedIndex].Category;
+                snapshot[category] = !snapshot[category];
             }
-            else if (key.Key == ConsoleKey.Enter)
+            else if (pressedKey.Key == ConsoleKey.Enter)
             {
-                foreach (var (cat, _) in _allCategories)
-                    _enabled[cat.ToString()] = snapshot[cat];
+                foreach (var (category, _) in allCategories)
+                    enabled[category.ToString()] = snapshot[category];
                 Save();
                 Console.Clear();
-                Console.WriteLine("Nastavení logování uloženo.");
+                Console.WriteLine("Logging settings saved.");
                 PrintStartupBanner();
                 break;
             }
-            else if (key.Key == ConsoleKey.Escape)
+            else if (pressedKey.Key == ConsoleKey.Escape)
             {
                 Console.Clear();
-                Console.WriteLine("Nastavení logování zrušeno (beze změn).");
+                Console.WriteLine("Logging settings cancelled (no changes).");
                 break;
             }
         }

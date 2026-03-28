@@ -135,8 +135,8 @@ internal sealed partial class Exceptions
         return null;
     }
 
-    readonly static StringBuilder sbAdditionalInfoInner = new();
-    readonly static StringBuilder sbAdditionalInfo = new();
+    readonly static StringBuilder additionalInfoInnerStringBuilder = new();
+    readonly static StringBuilder additionalInfoStringBuilder = new();
 
     /// <summary>
     /// Builds additional parameter information string.
@@ -144,14 +144,14 @@ internal sealed partial class Exceptions
     /// <returns>Formatted additional parameters string.</returns>
     internal static string AddParams()
     {
-        sbAdditionalInfo.Insert(0, Environment.NewLine);
-        sbAdditionalInfo.Insert(0, "Outer:");
-        sbAdditionalInfo.Insert(0, Environment.NewLine);
-        sbAdditionalInfoInner.Insert(0, Environment.NewLine);
-        sbAdditionalInfoInner.Insert(0, "Inner:");
-        sbAdditionalInfoInner.Insert(0, Environment.NewLine);
-        var outerParams = sbAdditionalInfo.ToString();
-        var innerParams = sbAdditionalInfoInner.ToString();
+        additionalInfoStringBuilder.Insert(0, Environment.NewLine);
+        additionalInfoStringBuilder.Insert(0, "Outer:");
+        additionalInfoStringBuilder.Insert(0, Environment.NewLine);
+        additionalInfoInnerStringBuilder.Insert(0, Environment.NewLine);
+        additionalInfoInnerStringBuilder.Insert(0, "Inner:");
+        additionalInfoInnerStringBuilder.Insert(0, Environment.NewLine);
+        var outerParams = additionalInfoStringBuilder.ToString();
+        var innerParams = additionalInfoInnerStringBuilder.ToString();
         return outerParams + innerParams;
     }
     #endregion

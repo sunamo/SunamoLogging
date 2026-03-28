@@ -5,8 +5,8 @@ namespace SunamoLogging.FileLogger;
 /// </summary>
 internal class ScopeDisposable : IDisposable
 {
-    private readonly ILogger _logger;
-    private readonly object _state;
+    private readonly ILogger logger;
+    private readonly object state;
 
     /// <summary>
     /// Initializes a new instance of the ScopeDisposable class.
@@ -15,8 +15,8 @@ internal class ScopeDisposable : IDisposable
     /// <param name="state">The state object for this scope.</param>
     public ScopeDisposable(ILogger logger, object state)
     {
-        _logger = logger;
-        _state = state;
+        this.logger = logger;
+        this.state = state;
     }
 
     /// <summary>

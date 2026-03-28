@@ -31,3 +31,4 @@ global using System.Text.Json;
 global using System.Threading.Tasks;
 global using ILogger = Microsoft.Extensions.Logging.ILogger;
 global using NullLogger = Microsoft.Extensions.Logging.Abstractions.NullLogger;
+global using SunamoLogging.LogRouter;

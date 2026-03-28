@@ -37,5 +37,5 @@ internal class RuntimeHelper
     /// <summary>
     /// Empty dummy method for log messages. Used as a placeholder delegate.
     /// </summary>
-    internal static Action<TypeOfMessageLogging, string, Object[]> EmptyDummyMethodLogMessage = EmptyDummyMethodLogMessageImpl;
+    internal static Action<TypeOfMessageLogging, string, Object[]> EmptyDummyMethodLogMessage { get; set; } = EmptyDummyMethodLogMessageImpl;
 }

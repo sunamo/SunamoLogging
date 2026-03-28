@@ -9,7 +9,7 @@ public class DummyTemplateLogger : TemplateLoggerBase
     /// <summary>
     /// Gets the singleton instance of the dummy template logger.
     /// </summary>
-    public static DummyTemplateLogger Instance = new();
+    public static DummyTemplateLogger Instance { get; set; } = new();
 
     private DummyTemplateLogger() : base(RuntimeHelper.EmptyDummyMethodLogMessage)
     {

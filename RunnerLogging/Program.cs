@@ -1,6 +1,3 @@
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
-
 namespace RunnerLogging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -32,23 +29,23 @@ internal class Program
 
     static async Task MainAsync(string[] args)
     {
-        var runned = await CmdBootStrap.RunWithRunArgs(new SunamoCl.SunamoCmd.Args.RunArgs { ServiceCollection = Services });
+        var runResult = await CmdBootStrap.RunWithRunArgs(new SunamoCl.SunamoCmd.Args.RunArgs { ServiceCollection = Services });
 
-        var list = Provider.GetService<LoggerOuter>();
-        list?.Log();
+        var loggerOuter = Provider.GetService<LoggerOuter>();
+        loggerOuter?.Log();
 
-        #region Před zavedením CmdBootstrap
-        var sc = new ServiceCollection();
-        sc.AddLogging(opt => opt.SetMinimumLevel(LogLevel.Warning));
-        sc.AddSingleton(provider =>
+        #region Before CmdBootstrap introduction
+        var serviceCollection = new ServiceCollection();
+        serviceCollection.AddLogging(options => options.SetMinimumLevel(LogLevel.Warning));
+        serviceCollection.AddSingleton(provider =>
         {
             var loggerFactory = provider.GetRequiredService<ILoggerFactory>();
             loggerFactory.AddFile("RunnerLogging");
             const string categoryName = "Any";
             return loggerFactory.CreateLogger(categoryName);
         });
-        var sp = sc.BuildServiceProvider();
-        var logger = sp.GetRequiredService<ILogger>();
+        var serviceProvider = serviceCollection.BuildServiceProvider();
+        var logger = serviceProvider.GetRequiredService<ILogger>();
         logger.LogCritical("END OF WORLD!");
         #endregion
 

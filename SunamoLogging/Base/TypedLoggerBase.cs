@@ -6,8 +6,7 @@ namespace SunamoLogging.Base;
 /// </summary>
 public abstract class TypedLoggerBase
 {
-    private static Type type = typeof(TypedLoggerBase);
-    private Action<TypeOfMessageLogging, string, string[]>? _typedWriteLineDelegate;
+    private Action<TypeOfMessageLogging, string, string[]>? typedWriteLineDelegate;
 
     /// <summary>
     /// Initializes a new instance of the TypedLoggerBase class.
@@ -15,7 +14,7 @@ public abstract class TypedLoggerBase
     /// <param name="typedWriteLineDelegate">The delegate to invoke for writing log messages.</param>
     public TypedLoggerBase(Action<TypeOfMessageLogging, string, string[]> typedWriteLineDelegate)
     {
-        _typedWriteLineDelegate = typedWriteLineDelegate;
+        this.typedWriteLineDelegate = typedWriteLineDelegate;
     }
 
 #if !DEBUG2
@@ -24,7 +23,7 @@ public abstract class TypedLoggerBase
     /// </summary>
     public TypedLoggerBase()
     {
-        _typedWriteLineDelegate = null;
+        typedWriteLineDelegate = null;
     }
 #endif
 
@@ -47,7 +46,7 @@ public abstract class TypedLoggerBase
     /// <param name="args">Format arguments.</param>
     public void Success(string text, params string[] args)
     {
-        _typedWriteLineDelegate?.Invoke(TypeOfMessageLogging.Success, text, args);
+        typedWriteLineDelegate?.Invoke(TypeOfMessageLogging.Success, text, args);
     }
 
     /// <summary>
@@ -57,7 +56,7 @@ public abstract class TypedLoggerBase
     /// <param name="args">Format arguments.</param>
     public void Error(string text, params string[] args)
     {
-        _typedWriteLineDelegate?.Invoke(TypeOfMessageLogging.Error, text, args);
+        typedWriteLineDelegate?.Invoke(TypeOfMessageLogging.Error, text, args);
     }
 
     /// <summary>
@@ -67,7 +66,7 @@ public abstract class TypedLoggerBase
     /// <param name="args">Format arguments.</param>
     public void Warning(string text, params string[] args)
     {
-        _typedWriteLineDelegate?.Invoke(TypeOfMessageLogging.Warning, text, args);
+        typedWriteLineDelegate?.Invoke(TypeOfMessageLogging.Warning, text, args);
     }
 
     /// <summary>
@@ -77,7 +76,7 @@ public abstract class TypedLoggerBase
     /// <param name="args">Format arguments.</param>
     public void Appeal(string text, params string[] args)
     {
-        _typedWriteLineDelegate?.Invoke(TypeOfMessageLogging.Appeal, text, args);
+        typedWriteLineDelegate?.Invoke(TypeOfMessageLogging.Appeal, text, args);
     }
 
     /// <summary>
@@ -87,7 +86,7 @@ public abstract class TypedLoggerBase
     /// <param name="args">Format arguments.</param>
     public void Ordinal(string text, params string[] args)
     {
-        _typedWriteLineDelegate?.Invoke(TypeOfMessageLogging.Ordinal, text, args);
+        typedWriteLineDelegate?.Invoke(TypeOfMessageLogging.Ordinal, text, args);
     }
 
     /// <summary>
@@ -130,7 +129,7 @@ public abstract class TypedLoggerBase
     /// <param name="args">Format arguments.</param>
     public void Information(string text, params string[] args)
     {
-        _typedWriteLineDelegate?.Invoke(TypeOfMessageLogging.Information, text, args);
+        typedWriteLineDelegate?.Invoke(TypeOfMessageLogging.Information, text, args);
     }
     #endregion
 }

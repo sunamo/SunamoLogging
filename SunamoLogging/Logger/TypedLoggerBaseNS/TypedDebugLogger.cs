@@ -9,7 +9,7 @@ public class TypedDebugLogger : TypedLoggerBase
     /// <summary>
     /// Gets the singleton instance of the typed debug logger.
     /// </summary>
-    public static TypedDebugLogger Instance = new();
+    public static TypedDebugLogger Instance { get; set; } = new();
 
     private TypedDebugLogger() : base(DebugLogger.DebugWriteLine)
     {

@@ -3,12 +3,12 @@ namespace SunamoLogging.FileLogger;
 /// <summary>
 /// Logger provider for file-based logging.
 /// </summary>
-public class FileLoggerProvider(string _path) : ILoggerProvider
+public class FileLoggerProvider(string path) : ILoggerProvider
 {
     /// <summary>
     /// Gets or sets the log levels that should be logged.
     /// </summary>
-    public List<LogLevel> LevelsToLog = [LogLevel.Critical, LogLevel.Error, LogLevel.Warning];
+    public List<LogLevel> LevelsToLog { get; set; } = [LogLevel.Critical, LogLevel.Error, LogLevel.Warning];
 
     /// <summary>
     /// Creates a file logger provider with a custom directory.
@@ -18,10 +18,10 @@ public class FileLoggerProvider(string _path) : ILoggerProvider
     /// <returns>A new FileLoggerProvider instance.</returns>
     public static FileLoggerProvider CustomDirectory(string directory, string appName)
     {
-        var filePath = Path.Combine(directory, appName);
-        FS.CreateFoldersPsysicallyUnlessThere(filePath);
+        var logDirectoryPath = Path.Combine(directory, appName);
+        FS.CreateFoldersPsysicallyUnlessThere(logDirectoryPath);
 
-        return new FileLoggerProvider(filePath);
+        return new FileLoggerProvider(logDirectoryPath);
     }
 
     /// <summary>
@@ -41,7 +41,7 @@ public class FileLoggerProvider(string _path) : ILoggerProvider
     /// <returns>A new FileLogger instance.</returns>
     public ILogger CreateLogger(string categoryName)
     {
-        return new FileLogger(_path, LevelsToLog);
+        return new FileLogger(path, LevelsToLog);
     }
 
     /// <summary>
