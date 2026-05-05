@@ -11,6 +11,12 @@ public class FileLoggerProvider(string path) : ILoggerProvider
     public List<LogLevel> LevelsToLog { get; set; } = [LogLevel.Critical, LogLevel.Error, LogLevel.Warning];
 
     /// <summary>
+    /// If set, all log entries go to a single file with this name (joined to <c>path</c>).
+    /// If null/empty, the legacy per-day file naming <c>yyyy-MM-dd_log.txt</c> is used.
+    /// </summary>
+    public string? LogFileName { get; set; }
+
+    /// <summary>
     /// Creates a file logger provider with a custom directory.
     /// </summary>
     /// <param name="directory">The base directory for log files.</param>
@@ -57,7 +63,7 @@ public class FileLoggerProvider(string path) : ILoggerProvider
     /// <returns>A new FileLogger instance.</returns>
     public ILogger CreateLogger(string categoryName)
     {
-        return new FileLogger(path, LevelsToLog);
+        return new FileLogger(path, LevelsToLog, LogFileName);
     }
 
     /// <summary>
