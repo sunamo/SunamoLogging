@@ -52,7 +52,43 @@ public class FileLogger(string path, List<LogLevel> levelsToLog, string? logFile
             {
                 sb.AppendLine(exception.ToString());
             }
-            File.AppendAllText(fullFilePath, sb.ToString());
+            var line = sb.ToString();
+
+            // Best-effort write: file may be locked by OneDrive sync, AV scanner, parallel process, etc.
+            // A logging side-effect must NEVER crash the host app, so retry briefly and fall back to Console.Error.
+            const int maxAttempts = 4;
+            Exception? lastEx = null;
+            for (int attempt = 1; attempt <= maxAttempts; attempt++)
+            {
+                try
+                {
+                    File.AppendAllText(fullFilePath, line);
+                    return;
+                }
+                catch (IOException ex)
+                {
+                    lastEx = ex;
+                    if (attempt < maxAttempts) Thread.Sleep(50 * attempt);
+                }
+                catch (UnauthorizedAccessException ex)
+                {
+                    lastEx = ex;
+                    if (attempt < maxAttempts) Thread.Sleep(50 * attempt);
+                }
+                catch (Exception ex)
+                {
+                    lastEx = ex;
+                    break;
+                }
+            }
+            try
+            {
+                Console.Error.Write($"[FileLogger fallback - write to '{fullFilePath}' failed: {lastEx?.GetType().Name}: {lastEx?.Message}] {line}");
+            }
+            catch (Exception)
+            {
+                // If even Console.Error is unusable, swallow - logging must never throw upward.
+            }
         }
     }
 
