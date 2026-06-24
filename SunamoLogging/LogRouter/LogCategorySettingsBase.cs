@@ -2,26 +2,14 @@ namespace SunamoLogging.LogRouter;
 
 using System.Text.Json;
 
-/// <summary>
-/// Base class for managing log category settings with persistence to a JSON file.
-/// </summary>
-/// <typeparam name="TCategory">The enum type representing log categories.</typeparam>
 public class LogCategorySettingsBase<TCategory>
     where TCategory : struct, Enum
 {
     private readonly string settingsFilePath;
 
-    /// <summary>
-    /// All available log categories with their descriptions.
-    /// </summary>
     protected readonly (TCategory Category, string Description)[] allCategories;
     private Dictionary<string, bool> enabled = [];
 
-    /// <summary>
-    /// Initializes a new instance of the LogCategorySettingsBase class.
-    /// </summary>
-    /// <param name="settingsFilePath">The file path for persisting settings.</param>
-    /// <param name="allCategories">Array of all available categories with descriptions.</param>
     public LogCategorySettingsBase(string settingsFilePath, (TCategory Category, string Description)[] allCategories)
     {
         this.settingsFilePath = settingsFilePath;
@@ -51,9 +39,6 @@ public class LogCategorySettingsBase<TCategory>
         }
     }
 
-    /// <summary>
-    /// Saves the current category settings to the settings file.
-    /// </summary>
     public void Save()
     {
         try
@@ -71,27 +56,15 @@ public class LogCategorySettingsBase<TCategory>
         }
     }
 
-    /// <summary>
-    /// Determines whether the specified category is enabled.
-    /// </summary>
-    /// <param name="category">The category to check.</param>
-    /// <returns>True if the category is enabled, false otherwise.</returns>
     public bool IsEnabled(TCategory category) =>
         enabled.TryGetValue(category.ToString(), out var isEnabled) && isEnabled;
 
-    /// <summary>
-    /// Toggles the enabled state of the specified category.
-    /// </summary>
-    /// <param name="category">The category to toggle.</param>
     public void Toggle(TCategory category)
     {
         var categoryKey = category.ToString();
         enabled[categoryKey] = !(enabled.TryGetValue(categoryKey, out var isEnabled) && isEnabled);
     }
 
-    /// <summary>
-    /// Prints a startup banner showing which categories are enabled and disabled.
-    /// </summary>
     public void PrintStartupBanner()
     {
         var enabledNames = allCategories
@@ -109,9 +82,6 @@ public class LogCategorySettingsBase<TCategory>
         Console.WriteLine("----------------------");
     }
 
-    /// <summary>
-    /// Opens an interactive console UI for toggling log categories.
-    /// </summary>
     public void OpenConsoleUI()
     {
         var snapshot = allCategories
