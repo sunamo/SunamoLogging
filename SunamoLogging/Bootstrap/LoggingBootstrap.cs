@@ -22,8 +22,8 @@ public static class LoggingBootstrap
     /// </summary>
     public static ConsoleAppContext InitConsoleApp(string appName, LoggingBootstrapOptions? options = null, Action<IServiceCollection>? configureServices = null)
     {
-        AppData.ci.CreateAppFoldersIfDontExists(new CreateAppFoldersIfDontExistsArgs { AppName = appName });
-        var logsFolder = AppData.ci.GetFolder(AppFolders.Logs);
+        AppData.Instance.CreateAppFoldersIfDontExists(new CreateAppFoldersIfDontExistsArgs { AppName = appName });
+        var logsFolder = AppData.Instance.GetFolder(AppFolders.Logs);
         var fileLoggerProvider = Initialize(logsFolder, options);
 
         var services = new ServiceCollection();
