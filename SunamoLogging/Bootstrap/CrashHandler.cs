@@ -2,13 +2,20 @@ namespace SunamoLogging.Bootstrap;
 
 using System.Runtime.InteropServices;
 
+/// <summary>
+/// Registers global handlers for unhandled exceptions and unobserved task exceptions
+/// that append a structured crash record (timestamp, app/runtime/OS info, full stack trace)
+/// to a single crash log file.
+/// </summary>
 public static class CrashHandler
 {
     private static string? _crashFile;
     private static bool _registered;
 
-    // Subscribes to AppDomain.UnhandledException and TaskScheduler.UnobservedTaskException.
-    // Idempotent — second call updates the target file but does not double-subscribe.
+    /// <summary>
+    /// Subscribes to AppDomain.UnhandledException and TaskScheduler.UnobservedTaskException.
+    /// Idempotent — second call updates the target file but does not double-subscribe.
+    /// </summary>
     public static void Register(string crashFilePath)
     {
         _crashFile = crashFilePath;

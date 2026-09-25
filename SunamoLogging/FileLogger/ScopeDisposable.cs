@@ -1,16 +1,27 @@
 namespace SunamoLogging.FileLogger;
 
+/// <summary>
+/// Disposable scope object for logger scopes.
+/// </summary>
 internal class ScopeDisposable : IDisposable
 {
     private readonly ILogger logger;
     private readonly object state;
 
+    /// <summary>
+    /// Initializes a new instance of the ScopeDisposable class.
+    /// </summary>
+    /// <param name="logger">The logger associated with this scope.</param>
+    /// <param name="state">The state object for this scope.</param>
     public ScopeDisposable(ILogger logger, object state)
     {
         this.logger = logger;
         this.state = state;
     }
 
+    /// <summary>
+    /// Disposes the scope.
+    /// </summary>
     public void Dispose()
     {
         GC.SuppressFinalize(this);

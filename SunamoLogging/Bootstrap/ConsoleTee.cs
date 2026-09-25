@@ -1,11 +1,18 @@
 namespace SunamoLogging.Bootstrap;
 
+/// <summary>
+/// Mirrors Console.Out and Console.Error to a file in addition to the original console streams.
+/// Install once at app startup to capture all Console.WriteLine output to disk.
+/// </summary>
 public static class ConsoleTee
 {
     private static StreamWriter? _fileWriter;
     private static bool _installed;
 
-    // Mirrors Console.Out and Console.Error to a file. Idempotent — second call is no-op.
+    /// <summary>
+    /// Redirects Console.Out and Console.Error so every write goes to both the original
+    /// console stream and the given file. Idempotent — second call is no-op.
+    /// </summary>
     public static void Install(string filePath)
     {
         if (_installed) return;
