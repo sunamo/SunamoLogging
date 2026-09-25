@@ -7,19 +7,11 @@ using SunamoPlatformUwpInterop.AppData;
 using SunamoPlatformUwpInterop.Args;
 using SunamoPlatformUwpInterop._public.SunamoEnums.Enums;
 
-/// <summary>
-/// One-call setup for the „DISKOVÉ LOGY" pattern: wipe Logs/, tee Console to app.log,
-/// register crash handler that writes to crash.log, return a configured <see cref="FileLoggerProvider"/>.
-/// Intended to be called from app entry point right after the Logs folder is known.
-/// </summary>
 public static class LoggingBootstrap
 {
-    /// <summary>
-    /// Single-call console-app bootstrap: AppData folders, log wipe, Console tee, crash handler,
-    /// FileLoggerProvider, ServiceCollection with <c>AddServicesEndingWithService()</c>,
-    /// ServiceProvider built, ILogger resolved. App calls this once and gets back everything.
-    /// Use this from app static ctor: <c>var ctx = LoggingBootstrap.InitConsoleApp("MyApp");</c>
-    /// </summary>
+    // Single-call console-app bootstrap: AppData folders, log wipe, Console tee, crash handler,
+    // FileLoggerProvider, ServiceCollection with AddServicesEndingWithService(),
+    // ServiceProvider built, ILogger resolved.
     public static ConsoleAppContext InitConsoleApp(string appName, LoggingBootstrapOptions? options = null, Action<IServiceCollection>? configureServices = null)
     {
         AppData.Instance.CreateAppFoldersIfDontExists(new CreateAppFoldersIfDontExistsArgs { AppName = appName });
@@ -35,11 +27,8 @@ public static class LoggingBootstrap
         return new ConsoleAppContext(services, provider, logger);
     }
 
-    /// <summary>
-    /// Initializes disk logging end-to-end for an app. Returns a provider ready to be registered
-    /// in DI (e.g. <c>CmdBootStrap.AddILogger(services, true, provider, appName)</c>).
-    /// Use this if you need finer control than <see cref="InitConsoleApp"/>.
-    /// </summary>
+    // Initializes disk logging end-to-end for an app. Returns a provider ready to be registered in DI.
+    // Use this if you need finer control than InitConsoleApp.
     public static FileLoggerProvider Initialize(string logsFolder, LoggingBootstrapOptions? options = null)
     {
         options ??= new LoggingBootstrapOptions();
