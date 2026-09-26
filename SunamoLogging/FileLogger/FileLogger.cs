@@ -19,10 +19,7 @@ public class FileLogger(string path, List<LogLevel> levelsToLog, string? logFile
     /// <summary>
     /// Determines whether the specified log level is enabled.
     /// </summary>
-    public bool IsEnabled(LogLevel logLevel)
-    {
-        return LevelsToLog.Contains(logLevel);
-    }
+    public bool IsEnabled(LogLevel logLevel) => LevelsToLog.Contains(logLevel);
 
     /// <summary>
     /// Writes a log entry to the log file.
@@ -31,7 +28,7 @@ public class FileLogger(string path, List<LogLevel> levelsToLog, string? logFile
     {
         if (!IsEnabled(logLevel)) return;
 
-        if (formatter == null)
+        if (formatter is null)
         {
             CL.WriteError($"{nameof(formatter)} in {nameof(FileLogger)} was null");
             return;
@@ -39,16 +36,16 @@ public class FileLogger(string path, List<LogLevel> levelsToLog, string? logFile
 
         lock (lockObject)
         {
-            string fileName = string.IsNullOrEmpty(logFileName)
+            var fileName = string.IsNullOrEmpty(logFileName)
                 ? DateTime.Now.ToString("yyyy-MM-dd") + "_log.txt"
                 : logFileName!;
-            string fullFilePath = Path.Combine(path, fileName);
+            var fullFilePath = Path.Combine(path, fileName);
 
             var sb = new StringBuilder();
             sb.Append('[').Append(DateTime.Now.ToString("O")).Append("] ");
             sb.Append(logLevel.ToString()).Append(": ");
             sb.AppendLine(formatter(state, exception ?? new Exception()));
-            if (exception != null)
+            if (exception is not null)
             {
                 sb.AppendLine(exception.ToString());
             }

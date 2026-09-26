@@ -21,10 +21,7 @@ internal class ThisApp
         var formattedMessage = string.Format(message, args);
         if (formattedMessage.Trim() != string.Empty)
         {
-            if (StatusSetted != null)
-            {
-                StatusSetted(messageType, formattedMessage);
-            }
+            StatusSetted?.Invoke(messageType, formattedMessage);
         }
     }
 

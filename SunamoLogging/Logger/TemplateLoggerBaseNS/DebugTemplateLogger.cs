@@ -5,12 +5,7 @@ namespace SunamoLogging.Logger.TemplateLoggerBaseNS;
 /// </summary>
 public class DebugTemplateLogger : TemplateLoggerBase
 {
-    static DebugTemplateLogger? loggerInstance =
-#if DEBUG2
-    new DebugTemplateLogger();
-#elif !DEBUG2
-    null;
-#endif
+    static DebugTemplateLogger? loggerInstance = new();
 
     /// <summary>
     /// Gets the singleton instance of the debug template logger.

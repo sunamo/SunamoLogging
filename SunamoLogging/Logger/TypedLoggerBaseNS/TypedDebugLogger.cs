@@ -5,14 +5,17 @@ namespace SunamoLogging.Logger.TypedLoggerBaseNS;
 /// </summary>
 public class TypedDebugLogger : TypedLoggerBase
 {
-#if DEBUG
     /// <summary>
     /// Gets the singleton instance of the typed debug logger.
     /// </summary>
     public static TypedDebugLogger Instance { get; set; } = new();
 
-    private TypedDebugLogger() : base(DebugLogger.DebugWriteLine)
+    private TypedDebugLogger() : base(WriteLineWorker)
     {
     }
-#endif
+
+    public static void WriteLineWorker(TypeOfMessageLogging messageType, string message, params string[] args)
+    {
+        Console.WriteLine(string.Format(message, args));
+    }
 }

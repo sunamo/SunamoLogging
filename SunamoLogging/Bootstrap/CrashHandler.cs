@@ -41,7 +41,7 @@ public static class CrashHandler
 
     private static void Write(Exception ex, string source)
     {
-        if (_crashFile == null) return;
+        if (_crashFile is null) return;
         try
         {
             var sb = new StringBuilder();

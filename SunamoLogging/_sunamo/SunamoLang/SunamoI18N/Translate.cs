@@ -10,8 +10,5 @@ internal class Translate
     /// </summary>
     /// <param name="key">The translation key.</param>
     /// <returns>The translated text (currently the key itself).</returns>
-    internal static string FromKey(string key)
-    {
-        return key;
-    }
+    internal static string FromKey(string key) => key;
 }

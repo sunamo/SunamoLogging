@@ -28,9 +28,6 @@ public class DebugLogger(Action<string, string[]> writeLineHandler) : LoggerBase
     /// </summary>
     public static void BreakOrReadLine()
     {
-#if DEBUG
-        System.Diagnostics.Debugger.Break();
-#endif
     }
 
     /// <summary>
@@ -39,28 +36,17 @@ public class DebugLogger(Action<string, string[]> writeLineHandler) : LoggerBase
     /// </summary>
     public static DebugLogger? LoggerInstance { get; set; }
 
-#if DEBUG
     /// <summary>
     /// Writes a formatted debug message with message type prefix.
     /// </summary>
     /// <param name="messageType">The type of the message.</param>
     /// <param name="message">The message format string.</param>
     /// <param name="args">Format arguments.</param>
-    public static void DebugWriteLine(TypeOfMessageLogging messageType, string message, params Object[] args)
-    {
-        DebugLogger.DebugWriteLine(messageType.ToString() + ":" + string.Format(message, args));
-    }
-
     /// <summary>
     /// Writes a formatted debug message.
     /// </summary>
     /// <param name="message">The message format string.</param>
     /// <param name="args">Format arguments.</param>
-    public static void DebugWriteLine(string message, params string[] args)
-    {
-        Debug.WriteLine(string.Format(message, args));
-    }
-#endif
 
     /// <summary>
     /// Breaks into the debugger.

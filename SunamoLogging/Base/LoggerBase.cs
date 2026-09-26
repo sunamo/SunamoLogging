@@ -23,11 +23,6 @@ public abstract class LoggerBase(Action<string, string[]> writeLineDelegate) : I
     /// <param name="args">Format arguments.</param>
     public void ClipboardOrDebug(string text, params string[] args)
     {
-#if DEBUG
-
-#else
-
-#endif
     }
 
     /// <summary>
@@ -69,9 +64,6 @@ public abstract class LoggerBase(Action<string, string[]> writeLineDelegate) : I
     /// <param name="separator">The separator between elements.</param>
     public void WriteListOneRow(List<string> list, string separator)
     {
-#if DEBUG
-        writeLineDelegate.Invoke(string.Join(separator, list), []);
-#endif
     }
 
     /// <summary>

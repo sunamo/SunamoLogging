@@ -157,11 +157,11 @@ public abstract class TemplateLoggerBase(Action<TypeOfMessageLogging, string, st
     /// <returns>True if any element is null or empty, false otherwise.</returns>
     public bool AnyElementIsNullOrEmpty(string collectionName, List<string> collection)
     {
-        List<int> nullOrEmptyIndexes = CAIndexesWithNull.IndexesWithNullOrEmpty(collection);
+        var nullOrEmptyIndexes = CAIndexesWithNull.IndexesWithNullOrEmpty(collection);
         if (nullOrEmptyIndexes.Count > 0)
         {
-            string? message = Exceptions.AnyElementIsNullOrEmpty(FullNameOfExecutedCode(), collectionName, nullOrEmptyIndexes);
-            if (message != null)
+            var message = Exceptions.AnyElementIsNullOrEmpty(FullNameOfExecutedCode(), collectionName, nullOrEmptyIndexes);
+            if (message is not null)
             {
                 WriteLine(TypeOfMessageLogging.Information, message);
             }
@@ -200,8 +200,8 @@ public abstract class TemplateLoggerBase(Action<TypeOfMessageLogging, string, st
     {
         if (collection.Count() % 2 == 1)
         {
-            string? message = Exceptions.NotEvenNumberOfElements(FullNameOfExecutedCode(), collectionName);
-            if (message != null)
+            var message = Exceptions.NotEvenNumberOfElements(FullNameOfExecutedCode(), collectionName);
+            if (message is not null)
             {
                 WriteLine(TypeOfMessageLogging.Error, message);
             }
@@ -214,10 +214,7 @@ public abstract class TemplateLoggerBase(Action<TypeOfMessageLogging, string, st
     /// Gets the full name (type.method) of the currently executing code.
     /// </summary>
     /// <returns>Full name in format "Namespace.Type.Method".</returns>
-    private string FullNameOfExecutedCode()
-    {
-        return ThrowEx.FullNameOfExecutedCode();
-    }
+    private string FullNameOfExecutedCode() => ThrowEx.FullNameOfExecutedCode();
 
     /// <summary>
     /// Writes a log message with the specified message type.
@@ -237,11 +234,11 @@ public abstract class TemplateLoggerBase(Action<TypeOfMessageLogging, string, st
     /// <returns>True if any element is null, false otherwise.</returns>
     public bool AnyElementIsNull(string collectionName, string[] collection)
     {
-        List<int> nullIndexes = CAIndexesWithNull.IndexesWithNull(collection);
+        var nullIndexes = CAIndexesWithNull.IndexesWithNull(collection);
         if (nullIndexes.Count > 0)
         {
-            string? message = Exceptions.AnyElementIsNullOrEmpty(FullNameOfExecutedCode(), collectionName, nullIndexes);
-            if (message != null)
+            var message = Exceptions.AnyElementIsNullOrEmpty(FullNameOfExecutedCode(), collectionName, nullIndexes);
+            if (message is not null)
             {
                 WriteLine(TypeOfMessageLogging.Information, message);
             }

@@ -13,6 +13,9 @@ internal class RuntimeHelper
     /// <param name="args">The arguments (unused).</param>
     internal static void EmptyDummyMethod(string message, params Object[] args)
     {
+        // parameters are required by the delegate signature (used in DummyLogger)
+        _ = message;
+        _ = args;
     }
 
     /// <summary>
@@ -32,6 +35,10 @@ internal class RuntimeHelper
     /// <param name="args">The arguments (unused).</param>
     internal static void EmptyDummyMethodLogMessageImpl(TypeOfMessageLogging messageType, string message, params Object[] args)
     {
+        // parameters are required by the delegate signature (EmptyDummyMethodLogMessage)
+        _ = messageType;
+        _ = message;
+        _ = args;
     }
 
     /// <summary>

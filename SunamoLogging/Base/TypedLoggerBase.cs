@@ -17,15 +17,9 @@ public abstract class TypedLoggerBase
         this.typedWriteLineDelegate = typedWriteLineDelegate;
     }
 
-#if !DEBUG2
     /// <summary>
     /// Initializes a new instance of the TypedLoggerBase class with no delegate.
     /// </summary>
-    public TypedLoggerBase()
-    {
-        typedWriteLineDelegate = null;
-    }
-#endif
 
     /// <summary>
     /// Writes a formatted line as an ordinary message.

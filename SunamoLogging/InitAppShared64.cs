@@ -14,22 +14,8 @@ public class InitApp
     /// </summary>
     public static void SetDebugLogger()
     {
-#if DEBUG
-        Logger = DebugLogger.Instance;
-
-#endif
-        TemplateLogger =
-#if DEBUG2 && DEBUG
-            DebugTemplateLogger.Instance;
-#elif !DEBUG2
-            null;
-#endif
-        TypedLogger =
-#if DEBUG2 && DEBUG
-            TypedDebugLogger.Instance;
-#elif !DEBUG2
-            null;
-#endif
+        TemplateLogger = DebugTemplateLogger.Instance;
+        TypedLogger = TypedDebugLogger.Instance;
     }
 
     #region Must be set during app initializing
