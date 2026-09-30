@@ -1,11 +1,7 @@
 namespace SunamoLogging.Bootstrap;
 
 using Microsoft.Extensions.DependencyInjection;
-using SunamoCl.SunamoCmd;
-using SunamoDependencyInjection;
-using SunamoPlatformUwpInterop.AppData;
-using SunamoPlatformUwpInterop.Args;
-using SunamoPlatformUwpInterop._public.SunamoEnums.Enums;
+using SunamoLogging._sunamo.SunamoDependencyInjection;
 
 /// <summary>
 /// One-call setup for the „DISKOVÉ LOGY" pattern: wipe Logs/, tee Console to app.log,
@@ -15,20 +11,19 @@ using SunamoPlatformUwpInterop._public.SunamoEnums.Enums;
 public static class LoggingBootstrap
 {
     /// <summary>
-    /// Single-call console-app bootstrap: AppData folders, log wipe, Console tee, crash handler,
+    /// Single-call console-app bootstrap: logs folder under %LOCALAPPDATA%\_Sunamo, log wipe, Console tee, crash handler,
     /// FileLoggerProvider, ServiceCollection with <c>AddServicesEndingWithService()</c>,
     /// ServiceProvider built, ILogger resolved. App calls this once and gets back everything.
     /// Use this from app static ctor: <c>var ctx = LoggingBootstrap.InitConsoleApp("MyApp");</c>
     /// </summary>
     public static ConsoleAppContext InitConsoleApp(string appName, LoggingBootstrapOptions? options = null, Action<IServiceCollection>? configureServices = null)
     {
-        AppData.Instance.CreateAppFoldersIfDontExists(new CreateAppFoldersIfDontExistsArgs { AppName = appName });
-        var logsFolder = AppData.Instance.GetFolder(AppFolders.Logs);
+        var logsFolder = GetLogsFolder(appName);
         var fileLoggerProvider = Initialize(logsFolder, options);
 
         var services = new ServiceCollection();
-        CmdBootStrap.AddILogger(services, true, fileLoggerProvider, appName);
-        services.AddServicesEndingWithService(NullLogger.Instance, [], isAddingFromReferencedSunamoAssemblies: true);
+        AddILogger(services, true, fileLoggerProvider, appName);
+        services.AddServicesEndingWithService(NullLogger.Instance);
         configureServices?.Invoke(services);
         var provider = services.BuildServiceProvider();
         var logger = provider.GetService<ILogger>() ?? NullLogger.Instance;
@@ -37,7 +32,7 @@ public static class LoggingBootstrap
 
     /// <summary>
     /// Initializes disk logging end-to-end for an app. Returns a provider ready to be registered
-    /// in DI (e.g. <c>CmdBootStrap.AddILogger(services, true, provider, appName)</c>).
+    /// in DI (e.g. <c>AddILogger(services, true, provider, appName)</c>).
     /// Use this if you need finer control than <see cref="InitConsoleApp"/>.
     /// </summary>
     public static FileLoggerProvider Initialize(string logsFolder, LoggingBootstrapOptions? options = null)
@@ -67,5 +62,55 @@ public static class LoggingBootstrap
             LogFileName = options.AppLogFileName,
         };
         return provider;
+    }
+
+    /// <summary>
+    /// Returns the non-backed-up logs folder of the app (%LOCALAPPDATA%\_Sunamo\AppName\Logs\), same location the AppData helper used.
+    /// </summary>
+    /// <param name="appName">Name of the application.</param>
+    private static string GetLogsFolder(string appName)
+    {
+        var localRoot = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "_Sunamo", appName);
+        return Path.Combine(localRoot, "Logs").TrimEnd('\\') + "\\";
+    }
+
+    /// <summary>
+    /// Registers logging (optional console output, the given file provider) and a singleton ILogger with the given category into the service collection.
+    /// </summary>
+    /// <param name="services">Service collection to register into.</param>
+    /// <param name="isLoggingToConsole">Whether the console logger is added.</param>
+    /// <param name="fileLoggerProvider">Optional provider added to the logger factory.</param>
+    /// <param name="categoryName">Category name of the registered logger.</param>
+    public static void AddILogger(IServiceCollection? services, bool isLoggingToConsole, ILoggerProvider? fileLoggerProvider, string categoryName)
+    {
+        if (services != null)
+        {
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.ClearProviders();
+                if (isLoggingToConsole)
+                {
+                    loggingBuilder.AddConsole();
+                }
+                loggingBuilder.SetMinimumLevel(LogLevel.Trace);
+            });
+            // The logger has to be created from a single factory, otherwise a new ILogger would be created for each file passed.
+            var serviceProvider = services.BuildServiceProvider();
+            var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+            if (fileLoggerProvider != null)
+            {
+                loggerFactory.AddProvider(fileLoggerProvider);
+            }
+            if (categoryName is null)
+            {
+                throw new ArgumentNullException(nameof(categoryName));
+            }
+            var logger = loggerFactory.CreateLogger(categoryName);
+            services.AddSingleton(typeof(ILogger), logger);
+        }
+        else if (isLoggingToConsole || fileLoggerProvider != null)
+        {
+            throw new Exception($"{nameof(services)} is null but {nameof(isLoggingToConsole)}/{nameof(fileLoggerProvider)} is set up");
+        }
     }
 }

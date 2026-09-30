@@ -1,55 +1,30 @@
 namespace RunnerLogging;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using SunamoCl;
-using SunamoCl.SunamoCmd;
-using SunamoLogging.FileLogger;
+using SunamoLogging.Bootstrap;
 
+/// <summary>
+/// Entry point of the RunnerLogging console application, which logs through SunamoLogging.
+/// </summary>
 internal class Program
 {
     const string appName = "RunnerLogging";
 
-    static ServiceCollection Services { get; set; } = new();
-    static ServiceProvider Provider { get; set; }
-
-    static Program()
-    {
-        CmdBootStrap.AddILogger(Services, true, FileLoggerProvider.DefaultDirectory(appName), "General");
-
-        Services.AddScoped<LoggerInner>();
-        Services.AddScoped<LoggerOuter>();
-
-        Provider = Services.BuildServiceProvider();
-    }
-
     static void Main(string[] args)
     {
-        MainAsync(args).GetAwaiter().GetResult();
-    }
+        var context = LoggingBootstrap.InitConsoleApp(appName, configureServices: services =>
+        {
+            services.AddScoped<LoggerInner>();
+            services.AddScoped<LoggerOuter>();
+        });
 
-    static async Task MainAsync(string[] args)
-    {
-        var runResult = await CmdBootStrap.RunWithRunArgs(new SunamoCl.SunamoCmd.Args.RunArgs { ServiceCollection = Services });
-
-        var loggerOuter = Provider.GetService<LoggerOuter>();
+        var loggerOuter = context.Provider.GetService<LoggerOuter>();
         loggerOuter?.Log();
 
-        #region Before CmdBootstrap introduction
-        var serviceCollection = new ServiceCollection();
-        serviceCollection.AddLogging(options => options.SetMinimumLevel(LogLevel.Warning));
-        serviceCollection.AddSingleton(provider =>
-        {
-            var loggerFactory = provider.GetRequiredService<ILoggerFactory>();
-            loggerFactory.AddFile("RunnerLogging");
-            const string categoryName = "Any";
-            return loggerFactory.CreateLogger(categoryName);
-        });
-        var serviceProvider = serviceCollection.BuildServiceProvider();
-        var logger = serviceProvider.GetRequiredService<ILogger>();
-        logger.LogCritical("END OF WORLD!");
-        #endregion
+        context.Logger.LogCritical("END OF WORLD!");
 
-        CL.Success("Finished");
-        CL.ReadLine();
+        Console.WriteLine("Finished");
+        Console.ReadLine();
     }
 }
