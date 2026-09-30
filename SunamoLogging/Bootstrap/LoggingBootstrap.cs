@@ -23,7 +23,7 @@ public static class LoggingBootstrap
 
         var services = new ServiceCollection();
         AddILogger(services, true, fileLoggerProvider, appName);
-        services.AddServicesEndingWithService(NullLogger.Instance, [], isAddingFromReferencedSunamoAssemblies: true);
+        services.AddServicesEndingWithService(NullLogger.Instance);
         configureServices?.Invoke(services);
         var provider = services.BuildServiceProvider();
         var logger = provider.GetService<ILogger>() ?? NullLogger.Instance;

@@ -2,42 +2,33 @@ namespace SunamoLogging._sunamo.SunamoDependencyInjection;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System.Diagnostics;
 using System.Reflection;
 
 /// <summary>
-/// Registers services by naming convention (copied from SunamoDependencyInjection to keep this package flat).
+/// Registers services by naming convention.
 /// </summary>
 internal static class IServiceCollectionExtensions
 {
-    internal static AddServicesEndingWithResult AddServicesEndingWithService(this IServiceCollection services,
-        ILogger logger,
-        string[] additionalAssemblyPatterns,
-        bool isAddingFromReferencedSunamoAssemblies = true,
-        ServiceLifetime lifetime = ServiceLifetime.Scoped,
-        bool skipAlreadyRegistered = false)
+    private const string Suffix = "Service";
+
+    /// <summary>
+    /// Loads Sunamo*.dll from the application folder and registers (scoped) classes ending with Service, or implementing a non-system interface,
+    /// from the loaded Sunamo assemblies (exported types only) and from the entry assembly.
+    /// </summary>
+    internal static void AddServicesEndingWithService(this IServiceCollection services, ILogger logger)
     {
-        if (logger == null) throw new ArgumentNullException(nameof(logger));
-
-        var result = new AddServicesEndingWithResult();
-
         var directoryPath = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule?.FileName ?? string.Empty);
         if (string.IsNullOrEmpty(directoryPath))
         {
-            return result;
+            return;
         }
-
-        var dllFiles = Directory.GetFiles(directoryPath, "Sunamo*.dll", SearchOption.TopDirectoryOnly);
-
-        foreach (var dllPath in dllFiles)
+        foreach (var dllPath in Directory.GetFiles(directoryPath, "Sunamo*.dll", SearchOption.TopDirectoryOnly))
         {
             var fileName = Path.GetFileNameWithoutExtension(dllPath);
-
             if (fileName == "SunamoInterfaces")
             {
                 continue;
             }
-
             try
             {
                 Assembly.Load(fileName);
@@ -48,65 +39,17 @@ internal static class IServiceCollectionExtensions
             }
         }
 
-        if (additionalAssemblyPatterns != null && additionalAssemblyPatterns.Length > 0)
+        var sunamoAssemblies = AppDomain.CurrentDomain.GetAssemblies()
+            .Where(assembly => assembly.GetName().Name?.StartsWith("Sunamo") == true && assembly.GetName().Name != "SunamoInterfaces");
+        foreach (var assembly in sunamoAssemblies)
         {
-            foreach (var pattern in additionalAssemblyPatterns)
+            try
             {
-                var additionalDllFiles = Directory.GetFiles(directoryPath, $"{pattern}*.dll", SearchOption.TopDirectoryOnly);
-                foreach (var dllPath in additionalDllFiles)
-                {
-                    var fileName = Path.GetFileNameWithoutExtension(dllPath);
-                    try
-                    {
-                        Assembly.Load(fileName);
-                    }
-                    catch (Exception ex)
-                    {
-                        logger.LogWarning(ex, "Failed to load additional assembly: {AssemblyName}", fileName);
-                    }
-                }
+                AddServicesFromAssembly(services, assembly, true, logger);
             }
-        }
-
-        if (isAddingFromReferencedSunamoAssemblies)
-        {
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            var sunamoAssemblies = assemblies.Where(assembly => assembly.GetName().Name?.StartsWith("Sunamo") == true);
-
-
-            var filteredAssemblies = sunamoAssemblies.Where(assembly => assembly.GetName().Name != "SunamoInterfaces");
-
-
-            foreach (var assembly in filteredAssemblies)
+            catch (Exception ex)
             {
-                try
-                {
-                    AddServicesEndingWith(services, assembly, "Service", result, true, lifetime, logger, skipAlreadyRegistered);
-                }
-                catch (Exception ex)
-                {
-                    logger.LogWarning(ex, "Failed to add services from Sunamo assembly: {AssemblyName}", assembly.GetName().Name);
-                }
-            }
-        }
-
-        if (additionalAssemblyPatterns != null && additionalAssemblyPatterns.Length > 0)
-        {
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            foreach (var pattern in additionalAssemblyPatterns)
-            {
-                var matchingAssemblies = assemblies.Where(assembly => assembly.GetName().Name?.StartsWith(pattern) == true);
-                foreach (var assembly in matchingAssemblies)
-                {
-                    try
-                    {
-                        AddServicesEndingWith(services, assembly, "Service", result, false, lifetime, logger, skipAlreadyRegistered);
-                    }
-                    catch (Exception ex)
-                    {
-                        logger.LogWarning(ex, "Failed to add services from additional assembly: {AssemblyName}", assembly.GetName().Name);
-                    }
-                }
+                logger.LogWarning(ex, "Failed to add services from Sunamo assembly: {AssemblyName}", assembly.GetName().Name);
             }
         }
 
@@ -115,7 +58,7 @@ internal static class IServiceCollectionExtensions
         {
             try
             {
-                AddServicesEndingWith(services, entryAssembly, "Service", result, false, lifetime, logger);
+                AddServicesFromAssembly(services, entryAssembly, false, logger);
             }
             catch (Exception ex)
             {
@@ -123,96 +66,56 @@ internal static class IServiceCollectionExtensions
                 throw;
             }
         }
-
-        return result;
     }
 
-    internal static void AddServicesEndingWith(
-        this IServiceCollection services,
-        Assembly assembly,
-        string suffix,
-        AddServicesEndingWithResult addServicesEndingWithResult,
-        bool isOnlyExported,
-        ServiceLifetime lifetime,
-        ILogger logger,
-        bool skipAlreadyRegistered = false)
+    private static void AddServicesFromAssembly(IServiceCollection services, Assembly assembly, bool isOnlyExported, ILogger logger)
     {
-        Type[] serviceTypes = [];
-
+        Type[] types = [];
         try
         {
-            serviceTypes = isOnlyExported ? assembly.GetExportedTypes() : assembly.GetTypes();
+            types = isOnlyExported ? assembly.GetExportedTypes() : assembly.GetTypes();
         }
         catch (Exception ex)
         {
             logger.LogWarning(ex, "Failed to get types from assembly: {AssemblyName}. This can happen with deprecated NuGet packages.", assembly.GetName().Name);
         }
 
-        serviceTypes = serviceTypes
-            .Where(type => type.IsClass && !type.IsAbstract && !type.IsGenericType &&
-                (type.Name.EndsWith(suffix) || GetRelevantInterfaces(type).Any()))
-            .ToArray();
-
-        foreach (var type in serviceTypes)
+        foreach (var type in types.Where(type => type.IsClass && !type.IsAbstract && !type.IsGenericType))
         {
-            var relevantInterfaces = GetRelevantInterfaces(type).ToArray();
-
-            // Try exact naming convention first: I{NameWithoutSuffix} (e.g. UserService -> IUser)
-            Type? interfaceToRegister = null;
-            if (type.Name.EndsWith(suffix))
-                interfaceToRegister = relevantInterfaces.FirstOrDefault(i => i.Name == $"I{type.Name[..^suffix.Length]}");
-
-            // Fallback: any non-system interface the class implements
-            interfaceToRegister ??= relevantInterfaces.FirstOrDefault();
-
-            if (skipAlreadyRegistered && services.Any(d => d.ServiceType == (interfaceToRegister ?? type)))
+            var interfaces = type.GetInterfaces()
+                .Where(i => !i.IsGenericType && i.Namespace != null && !i.Namespace.StartsWith("System") && !i.Namespace.StartsWith("Microsoft"))
+                .ToArray();
+            var endsWithSuffix = type.Name.EndsWith(Suffix);
+            if (!endsWithSuffix && interfaces.Length == 0)
+            {
                 continue;
+            }
+
+            // Exact naming convention first (UserService -> IUser), then any non-system interface.
+            Type? interfaceToRegister = null;
+            if (endsWithSuffix)
+            {
+                interfaceToRegister = interfaces.FirstOrDefault(i => i.Name == $"I{type.Name[..^Suffix.Length]}");
+            }
+            interfaceToRegister ??= interfaces.FirstOrDefault();
 
             if (interfaceToRegister != null)
             {
                 try
                 {
-                    switch (lifetime)
-                    {
-                        case ServiceLifetime.Singleton:
-                            services.AddSingleton(interfaceToRegister, type);
-                            break;
-                        case ServiceLifetime.Scoped:
-                            services.AddScoped(interfaceToRegister, type);
-                            break;
-                        case ServiceLifetime.Transient:
-                            services.AddTransient(interfaceToRegister, type);
-                            break;
-                    }
-
-                    if (interfaceToRegister.FullName != null)
-                        addServicesEndingWithResult.Interfaces.Add(interfaceToRegister.FullName);
+                    services.AddScoped(interfaceToRegister, type);
                 }
                 catch (Exception ex)
                 {
                     logger.LogWarning(ex, "Failed to register service interface: {InterfaceName} -> {TypeName}", interfaceToRegister.FullName, type.FullName);
                 }
             }
-            else if (type.Name.EndsWith(suffix))
+            else
             {
-                // No interface found — register concrete type (only for suffix-matching classes)
+                // No interface found, register the concrete type (only for classes ending with the suffix).
                 try
                 {
-                    switch (lifetime)
-                    {
-                        case ServiceLifetime.Singleton:
-                            services.AddSingleton(type);
-                            break;
-                        case ServiceLifetime.Scoped:
-                            services.AddScoped(type);
-                            break;
-                        case ServiceLifetime.Transient:
-                            services.AddTransient(type);
-                            break;
-                    }
-
-                    if (type.FullName != null)
-                        addServicesEndingWithResult.Classes.Add(type.FullName);
+                    services.AddScoped(type);
                 }
                 catch (Exception ex)
                 {
@@ -222,12 +125,4 @@ internal static class IServiceCollectionExtensions
             }
         }
     }
-
-    private static IEnumerable<Type> GetRelevantInterfaces(Type type) =>
-        type.GetInterfaces().Where(i =>
-            !i.IsGenericType &&
-            i.Namespace != null &&
-            !i.Namespace.StartsWith("System") &&
-            !i.Namespace.StartsWith("Microsoft"));
 }
-

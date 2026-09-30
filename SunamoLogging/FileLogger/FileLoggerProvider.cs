@@ -25,7 +25,7 @@ public class FileLoggerProvider(string path) : ILoggerProvider
     public static FileLoggerProvider CustomDirectory(string directory, string appName)
     {
         var logDirectoryPath = Path.Combine(directory, appName);
-        FS.CreateFoldersPsysicallyUnlessThere(logDirectoryPath);
+        Directory.CreateDirectory(logDirectoryPath);
 
         return new FileLoggerProvider(logDirectoryPath);
     }
