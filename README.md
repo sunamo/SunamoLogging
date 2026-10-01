@@ -1,5 +1,10 @@
 # SunamoLogging
 
+## Short description
+
+Podpora několika logovacích systémů podle výstupu: file logger, debug/dummy/sunamo loggery (včetně typovaných a template variant), `LogRouter` s providerem, `LoggingBootstrap`, `ConsoleTee` a `CrashHandler`. Staví na `Microsoft.Extensions.Logging`.
+Balíček je self-contained: kód dříve referencovaných balíčků (SunamoCl, SunamoDependencyInjection, SunamoPlatformUwpInterop aj.) je zkopírován do `_sunamo\` jako internal a jiné Sunamo balíčky nereferencuje (SunamoCl používá jen pomocný projekt `RunnerLogging`).
+
 Support for several logging system based on their output
 
 ## Overview
