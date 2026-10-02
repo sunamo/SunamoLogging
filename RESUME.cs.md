@@ -5,6 +5,11 @@ file_count: 65
 delete_recommendation_percent: 10
 generated_date: 2026-09-30
 generated_time: 15:11:23
+last_build_ok: yes
+last_build_date: 2026-10-02
+last_tests_run_date: 2026-10-02
+covered_lines: 0
+total_lines: 2371
 ---
 
 ## Description
