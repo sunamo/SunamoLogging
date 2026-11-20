@@ -11,7 +11,6 @@ global using SunamoLogging._sunamo.SunamoThisApp;
 global using SunamoLogging._public.SunamoEnums.Enums;
 global using SunamoLogging._public.SunamoInterfaces.Interfaces;
 global using SunamoLogging._sunamo.SunamoExceptions;
-global using SunamoLogging._sunamo.SunamoLang.SunamoI18N;
 global using SunamoLogging._sunamo.SunamoValues.Constants;
 global using SunamoLogging._sunamo.SunamoShared.Helpers.Runtime;
 global using SunamoLogging._sunamo;
