@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SunamoLogging._sunamo.SunamoDependencyInjection;
 
 /// <summary>
-/// One-call setup for the „DISKOVÉ LOGY" pattern: wipe Logs/, tee Console to app.log,
+/// One-call setup for the "DISK LOGS" pattern: wipe Logs/, tee Console to app.log,
 /// register crash handler that writes to crash.log, return a configured <see cref="FileLoggerProvider"/>.
 /// Intended to be called from app entry point right after the Logs folder is known.
 /// </summary>

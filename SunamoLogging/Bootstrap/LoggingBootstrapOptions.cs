@@ -2,7 +2,7 @@ namespace SunamoLogging.Bootstrap;
 
 /// <summary>
 /// Options for <see cref="LoggingBootstrap.Initialize"/>.
-/// Defaults align with the global „DISKOVÉ LOGY" rule: wipe at startup, mirror Console to disk,
+/// Defaults align with the global "DISK LOGS" rule: wipe at startup, mirror Console to disk,
 /// register crash handler, single app.log/crash.log files, all severities incl. Information.
 /// </summary>
 public class LoggingBootstrapOptions
