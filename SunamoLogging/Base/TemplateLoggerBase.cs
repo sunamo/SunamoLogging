@@ -11,7 +11,7 @@ public abstract class TemplateLoggerBase(Action<TypeOfMessageLogging, string, st
     /// <param name="path">The path where data was saved.</param>
     public void SavedToDrive(string path)
     {
-        WriteLine(TypeOfMessageLogging.Success, Translate.FromKey(XlfKeys.SavedToDrive) + ": " + path);
+        WriteLine(TypeOfMessageLogging.Success, "SavedToDrive" + ": " + path);
     }
 
     /// <summary>
@@ -19,7 +19,7 @@ public abstract class TemplateLoggerBase(Action<TypeOfMessageLogging, string, st
     /// </summary>
     public void TryAFewSecondsLaterAfterFullyInitialized()
     {
-        WriteLine(TypeOfMessageLogging.Information, Translate.FromKey(XlfKeys.TryAFewSecondsLaterAfterFullyInitialized));
+        WriteLine(TypeOfMessageLogging.Information, "Try a few seconds later after fully initialized");
     }
 
     /// <summary>
@@ -28,7 +28,7 @@ public abstract class TemplateLoggerBase(Action<TypeOfMessageLogging, string, st
     /// <param name="operationName">The name of the completed operation.</param>
     public void Finished(string operationName)
     {
-        WriteLine(TypeOfMessageLogging.Success, operationName + " - " + Translate.FromKey(XlfKeys.Finished));
+        WriteLine(TypeOfMessageLogging.Success, operationName + " - " + "Finished");
     }
 
     /// <summary>
@@ -74,7 +74,7 @@ public abstract class TemplateLoggerBase(Action<TypeOfMessageLogging, string, st
     /// </summary>
     public void SomeErrorsOccuredSeeLog()
     {
-        WriteLine(TypeOfMessageLogging.Error, Translate.FromKey(XlfKeys.SomeErrorsOccuredSeeLog));
+        WriteLine(TypeOfMessageLogging.Error, "Some errors occured see log");
     }
 
     /// <summary>
@@ -83,7 +83,7 @@ public abstract class TemplateLoggerBase(Action<TypeOfMessageLogging, string, st
     /// <param name="folderPath">The path to the folder that doesn't exist.</param>
     public void FolderDontExists(string folderPath)
     {
-        WriteLine(TypeOfMessageLogging.Error, Translate.FromKey(XlfKeys.Folder) + " " + folderPath + " doesn't exists.");
+        WriteLine(TypeOfMessageLogging.Error, "Folder" + " " + folderPath + " doesn't exists.");
     }
 
     /// <summary>
@@ -92,7 +92,7 @@ public abstract class TemplateLoggerBase(Action<TypeOfMessageLogging, string, st
     /// <param name="filePath">The path to the file that doesn't exist.</param>
     public void FileDontExists(string filePath)
     {
-        WriteLine(TypeOfMessageLogging.Error, Translate.FromKey(XlfKeys.File) + " " + filePath + " doesn't exists.");
+        WriteLine(TypeOfMessageLogging.Error, "File" + " " + filePath + " doesn't exists.");
     }
     #endregion
 
@@ -103,7 +103,7 @@ public abstract class TemplateLoggerBase(Action<TypeOfMessageLogging, string, st
     /// <param name="description">Description of what was loaded.</param>
     public void LoadedFromStorage(string description)
     {
-        WriteLine(TypeOfMessageLogging.Information, Translate.FromKey(XlfKeys.LoadedFromStorage) + ": " + description);
+        WriteLine(TypeOfMessageLogging.Information, "LoadedFromStorage" + ": " + description);
     }
 
     /// <summary>
@@ -111,7 +111,7 @@ public abstract class TemplateLoggerBase(Action<TypeOfMessageLogging, string, st
     /// </summary>
     public void InsertAsIndexesZeroBased()
     {
-        WriteLine(TypeOfMessageLogging.Information, Translate.FromKey(XlfKeys.InsertAsIndexesZeroBased));
+        WriteLine(TypeOfMessageLogging.Information, "Insert as indexes zero based");
     }
 
     /// <summary>
@@ -119,7 +119,7 @@ public abstract class TemplateLoggerBase(Action<TypeOfMessageLogging, string, st
     /// </summary>
     public void UnfortunatelyBadFormatPleaseTryAgain()
     {
-        WriteLine(TypeOfMessageLogging.Information, Translate.FromKey(XlfKeys.UnfortunatelyBadFormatPleaseTryAgain) + ".");
+        WriteLine(TypeOfMessageLogging.Information, "Unfortunately bad format please try again" + ".");
     }
 
     /// <summary>
@@ -127,7 +127,7 @@ public abstract class TemplateLoggerBase(Action<TypeOfMessageLogging, string, st
     /// </summary>
     public void OperationWasStopped()
     {
-        WriteLine(TypeOfMessageLogging.Information, Translate.FromKey(XlfKeys.OperationWasStopped));
+        WriteLine(TypeOfMessageLogging.Information, "OperationWasStopped");
     }
 
     /// <summary>
@@ -135,7 +135,7 @@ public abstract class TemplateLoggerBase(Action<TypeOfMessageLogging, string, st
     /// </summary>
     public void NoData()
     {
-        WriteLine(TypeOfMessageLogging.Information, Translate.FromKey(XlfKeys.PleaseEnterRightInputData));
+        WriteLine(TypeOfMessageLogging.Information, "Please enter right input data");
     }
 
     /// <summary>
@@ -144,7 +144,7 @@ public abstract class TemplateLoggerBase(Action<TypeOfMessageLogging, string, st
     /// <param name="fileName">The file name that was resized.</param>
     public void SuccessfullyResized(string fileName)
     {
-        WriteLine(TypeOfMessageLogging.Information, Translate.FromKey(XlfKeys.SuccessfullyResizedTo) + " " + fileName);
+        WriteLine(TypeOfMessageLogging.Information, "SuccessfullyResizedTo" + " " + fileName);
     }
 
     #endregion
