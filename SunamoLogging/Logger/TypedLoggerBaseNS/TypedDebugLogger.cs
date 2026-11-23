@@ -14,6 +14,12 @@ public class TypedDebugLogger : TypedLoggerBase
     {
     }
 
+    /// <summary>
+    /// Write line worker.
+    /// </summary>
+    /// <param name="messageType">The message type.</param>
+    /// <param name="message">The message.</param>
+    /// <param name="args">The args.</param>
     public static void WriteLineWorker(TypeOfMessageLogging messageType, string message, params string[] args)
     {
         Console.WriteLine(string.Format(message, args));
